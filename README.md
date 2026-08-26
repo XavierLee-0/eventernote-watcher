@@ -204,6 +204,13 @@ ICS_TOKEN=随机串
 
 之后每次 push 代码到 GitHub，Koyeb 会自动重新部署（数据随之重置，需要重新配置出演者和通知渠道——这是没有持久磁盘的代价）。
 
+**防止休眠**：Koyeb 免费实例在无流量一段时间后会休眠，而本项目的轮询调度器跑在应用进程里，实例休眠 = 停止抓取和推送。解决方法是用定时访问探活端点保持实例常醒，任选其一：
+
+- **Cloudflare Workers**（推荐，见 `extras/cloudflare-keepalive.js`）：创建 Worker 粘贴代码、改掉其中的应用地址，再添加 Cron 触发器 `*/5 * * * *`（每 5 分钟）。免费额度每天 10 万次请求，每 5 分钟仅用 288 次
+- **cron-job.org / UptimeRobot**：创建每 5 分钟一次的 HTTP 任务，URL 填 `https://<应用地址>/healthz`
+
+探活端点 `/healthz` 无需密码、只返回 ok，专为保活设计，其余接口仍受 Basic Auth 保护。
+
 ---
 
 ## 常见问题

@@ -36,6 +36,9 @@ class AuthMiddleware(BaseHTTPMiddleware):
 
     async def dispatch(self, request, call_next):
         path = request.url.path
+        if path == "/healthz":
+            # 无鉴权的探活端点, 供 UptimeRobot/cron-job.org 等保活服务调用, 不返回任何数据
+            return await call_next(request)
         if path == "/api/calendar.ics":
             if self.ics_token:
                 supplied = request.query_params.get("token", "")

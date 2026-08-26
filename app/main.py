@@ -39,6 +39,11 @@ app = FastAPI(title="Eventernote Watcher", lifespan=lifespan)
 app.add_middleware(AuthMiddleware)
 app.include_router(create_router(db, watcher))
 
+
+@app.get("/healthz")
+async def healthz():
+    return {"ok": True}
+
 if WEB_DIR.exists():
     app.mount("/static", StaticFiles(directory=WEB_DIR), name="static")
 
