@@ -93,9 +93,11 @@
           <tr v-for="a in actors" :key="a.actor_id">
             <td><b>{{ a.name }}</b><div class="muted">#{{ a.actor_id }}</div></td>
             <td>
-              <span class="tag pill" :class="a.enabled ? 'ok' : 'off'" @click="toggleActor(a)">
-                {{ a.enabled ? '监视中' : '已暂停' }}
-              </span>
+              <label class="switch">
+                <input type="checkbox" :checked="a.enabled" @change="toggleActor(a)">
+                <span class="track"></span>
+                <span>{{ a.enabled ? '监视中' : '已暂停' }}</span>
+              </label>
             </td>
             <td>
               <template v-if="a.last_fetch_at">
@@ -193,7 +195,7 @@
           </div>
           <div class="row">
             <div class="grow"><label class="field">发件地址</label><input class="wide" v-model="cfg.from_addr"></div>
-            <div class="grow"><label class="field">收件地址</label><input class="wide" v-model="cfg.to_addr"></div>
+            <div class="grow"><label class="field">收件地址（多个用逗号分隔）</label><input class="wide" v-model="cfg.to_addr"></div>
           </div>
           <label class="row" style="gap:4px;margin-top:8px"><input type="checkbox" v-model="cfg.use_ssl"> SSL（465 端口；关闭则用 587 STARTTLS）</label>
         </template>
@@ -204,6 +206,16 @@
       <button class="btn" @click="saveSettings" :disabled="savingSettings">{{ savingSettings ? '保存中…' : '保存设置' }}</button>
       <button class="btn ghost" @click="testNotify" :disabled="testing">{{ testing ? '发送中…' : '发送测试推送' }}</button>
       <span class="muted">先保存再测试</span>
+    </div>
+
+    <div class="card">
+      <b>配置备份</b>
+      <p class="muted" style="margin:8px 0">导出演者列表和全部设置（含通知渠道 token），用于迁移部署或备份。<b>文件含密钥，请妥善保管。</b>导入会替换当前出演者列表；活动快照不随配置走，导入后首次抓取自动重建基线。</p>
+      <div class="row">
+        <button class="btn ghost" @click="exportConfig">导出配置</button>
+        <button class="btn ghost" @click="$refs.importFile.click()" :disabled="importing">{{ importing ? '导入中…' : '导入配置' }}</button>
+        <input ref="importFile" type="file" accept=".json,application/json" style="display:none" @change="importConfig">
+      </div>
     </div>
   </template>
 
@@ -353,6 +365,39 @@ createApp({
       catch { showToast('复制失败，请手动选择复制'); }
     };
 
+    const importing = ref(false);
+    const exportConfig = async () => {
+      try {
+        const d = await api('/export');
+        const blob = new Blob([JSON.stringify(d, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'eventernote-watcher-config.json';
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('配置已导出');
+      } catch (e) { showToast('导出失败: ' + e.message); }
+    };
+    const importConfig = async (ev) => {
+      const file = ev.target.files[0];
+      if (!file) return;
+      if (!confirm('导入将替换当前出演者列表和设置，确定继续？')) { ev.target.value = ''; return; }
+      importing.value = true;
+      try {
+        const text = await file.text();
+        const body = JSON.parse(text);
+        const r = await api('/import', { method: 'POST', body });
+        showToast(`导入成功：${r.actor_count} 位出演者`);
+        await Promise.all([refreshActors(), loadSettings()]);
+      } catch (e) {
+        showToast('导入失败: ' + (e.message.includes('JSON') ? '文件不是有效的 JSON' : e.message));
+      } finally {
+        importing.value = false;
+        ev.target.value = '';
+      }
+    };
+
     watch([eventsActor, futureOnly], refreshEvents);
     watch(tab, (t) => {
       if (t === 'events') refreshEvents();
@@ -368,7 +413,7 @@ createApp({
       tab, toast, status, actors, events, notifications, eventsActor, futureOnly,
       settings, savingSettings, testing, searchKw, searching, searchResults,
       doSearch, addActor, toggleActor, delActor, runNow, saveSettings, testNotify, channelLabel,
-      calUrl, copyCal,
+      calUrl, copyCal, exportConfig, importConfig, importing,
     };
   },
 }).mount('#app');

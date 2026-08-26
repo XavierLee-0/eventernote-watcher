@@ -105,6 +105,48 @@ def create_router(db: Database, watcher: Watcher) -> APIRouter:
     def list_notifications(limit: int = 100):
         return db.list_notifications(limit)
 
+    # ---------- 配置导出/导入 ----------
+    @router.get("/export")
+    def export_config():
+        """导出出演者列表 + 设置(含通知渠道 token)。文件含密钥, 注意保管。"""
+        actors = [
+            {"actor_id": a["actor_id"], "name": a["name"], "enabled": bool(a["enabled"])}
+            for a in db.list_actors()
+        ]
+        return {
+            "version": 1,
+            "exported_at": __import__("datetime").datetime.now().isoformat(timespec="seconds"),
+            "actors": actors,
+            "settings": db.get_settings(),
+        }
+
+    @router.post("/import")
+    def import_config(body: dict):
+        """导入配置: 以文件为准替换出演者列表, 合并设置。活动快照不随配置走,
+        导入后首次抓取自动重建基线(不触发推送)。"""
+        if not isinstance(body, dict) or "actors" not in body or "settings" not in body:
+            raise HTTPException(400, "文件格式不正确: 需要 actors 和 settings 字段")
+        actors = body["actors"]
+        if not isinstance(actors, list):
+            raise HTTPException(400, "actors 字段必须是数组")
+        for a in actors:
+            if not isinstance(a, dict) or "actor_id" not in a or "name" not in a:
+                raise HTTPException(400, "actors 中存在缺少 actor_id/name 的条目")
+        # 替换出演者列表
+        keep = {a["actor_id"] for a in actors}
+        for row in db.list_actors():
+            if row["actor_id"] not in keep:
+                db.delete_actor(row["actor_id"])
+        for a in actors:
+            if db.add_actor(a["actor_id"], a["name"]):
+                if not a.get("enabled", True):
+                    db.update_actor(a["actor_id"], enabled=False)
+            else:
+                db.update_actor(a["actor_id"], enabled=a.get("enabled", True))
+        # 合并设置(以导入文件为准)
+        db.save_settings(body["settings"])
+        return {"ok": True, "actor_count": len(actors)}
+
     # ---------- 调度 ----------
     @router.get("/calendar.ics")
     def calendar_ics(all: bool = False):

@@ -68,6 +68,13 @@ def generate_ics(db: Database, include_past: bool = False) -> str:
         if ev["place"]:
             lines.append(_fold(f"LOCATION:{_escape(ev['place'])}"))
         lines.append(f"URL:{ev['url']}")
+        # 提醒: 全天事件 DTSTART 是当天 00:00, 提前 10 小时即前一日 14:00
+        # 注意 Google Calendar 对订阅日历会忽略 VALARM, 需在其日历设置里配置通知
+        lines.append("BEGIN:VALARM")
+        lines.append("ACTION:DISPLAY")
+        lines.append(f"DESCRIPTION:{_escape(ev['name'])}")
+        lines.append("TRIGGER:-PT10H")
+        lines.append("END:VALARM")
         lines.append("END:VEVENT")
     lines.append("END:VCALENDAR")
     return "\r\n".join(lines) + "\r\n"
