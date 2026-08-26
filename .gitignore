@@ -1,0 +1,7 @@
+.scratch/
+__pycache__/
+*.pyc
+.env
+# 本地跑 WebUI 模式产生的数据库; Actions 模式下 data/ 需要提交(首次运行前删除本文件中此行或用 -f 添加)
+data/
+site/

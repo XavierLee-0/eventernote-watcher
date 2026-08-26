@@ -1,0 +1,13 @@
+services:
+  eventernote-watcher:
+    build: .
+    container_name: eventernote-watcher
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/data
+    environment:
+      # 公网部署务必设置; 留空则不启用鉴权(仅限局域网)
+      - AUTH_PASSWORD=${AUTH_PASSWORD:-}
+      - ICS_TOKEN=${ICS_TOKEN:-}

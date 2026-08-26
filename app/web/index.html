@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eventernote Watcher</title>
+<script src="https://unpkg.com/vue@3.4.38/dist/vue.global.prod.js"></script>
+<style>
+  :root { --border: #e2e8f0; --muted: #718096; --accent: #4f6ef7; --bg: #f7fafc; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, "Segoe UI", "Microsoft YaHei", sans-serif; background: var(--bg); color: #2d3748; }
+  .layout { max-width: 900px; margin: 0 auto; padding: 16px; }
+  header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 0 16px; }
+  h1 { font-size: 20px; margin: 0; }
+  nav { display: flex; gap: 4px; margin-bottom: 16px; background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 4px; }
+  nav button { flex: 1; border: 0; background: transparent; padding: 8px; border-radius: 7px; cursor: pointer; font-size: 14px; color: var(--muted); }
+  nav button.active { background: var(--accent); color: #fff; }
+  .card { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 12px; }
+  .row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .grow { flex: 1; }
+  input, select { padding: 8px 10px; border: 1px solid var(--border); border-radius: 7px; font-size: 14px; background: #fff; }
+  input.wide { width: 100%; }
+  button.btn { padding: 8px 14px; border: 0; border-radius: 7px; background: var(--accent); color: #fff; cursor: pointer; font-size: 14px; }
+  button.btn.ghost { background: #edf2f7; color: #2d3748; }
+  button.btn.danger { background: #e53e3e; }
+  button.btn:disabled { opacity: .5; cursor: default; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--muted); font-weight: 500; }
+  .muted { color: var(--muted); font-size: 12px; }
+  .tag { display: inline-block; padding: 1px 8px; border-radius: 99px; font-size: 12px; }
+  .tag.ok { background: #c6f6d5; color: #22543d; }
+  .tag.err { background: #fed7d7; color: #742a2a; }
+  .tag.off { background: #e2e8f0; color: var(--muted); }
+  .switch { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; user-select: none; font-size: 13px; }
+  .switch input { display: none; }
+  .switch .track { width: 40px; height: 22px; border-radius: 99px; background: #cbd5e0; position: relative; transition: background .15s; }
+  .switch .track::after { content: ''; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%; background: #fff; transition: left .15s; }
+  .switch input:checked + .track { background: var(--accent); }
+  .switch input:checked + .track::after { left: 20px; }
+  .pill { cursor: pointer; user-select: none; }
+  .search-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 6px; border-bottom: 1px solid var(--border); }
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #2d3748; color: #fff; padding: 10px 18px; border-radius: 8px; font-size: 14px; z-index: 9; }
+  label.field { display: block; margin: 10px 0 4px; font-size: 13px; color: var(--muted); }
+  .channel { border: 1px solid var(--border); border-radius: 10px; padding: 12px; margin-bottom: 10px; }
+  .channel .head { display: flex; justify-content: space-between; align-items: center; }
+  code { background:#edf2f7; padding:1px 5px; border-radius:4px; font-size:12px; }
+</style>
+</head>
+<body>
+<div id="app" class="layout">
+  <header>
+    <h1>🎤 Eventernote Watcher</h1>
+    <div class="row">
+      <span class="muted">{{ status.last_run_at ? '上次抓取 ' + status.last_run_at : '尚未抓取' }}</span>
+      <button class="btn" :disabled="status.running" @click="runNow">
+        {{ status.running ? '抓取中…' : '立即抓取' }}
+      </button>
+    </div>
+  </header>
+
+  <nav>
+    <button :class="{active: tab==='actors'}" @click="tab='actors'">出演者</button>
+    <button :class="{active: tab==='events'}" @click="tab='events'">活动</button>
+    <button :class="{active: tab==='settings'}" @click="tab='settings'">设置</button>
+    <button :class="{active: tab==='logs'}" @click="tab='logs'">日志</button>
+  </nav>
+
+  <!-- 出演者 -->
+  <template v-if="tab==='actors'">
+    <div class="card">
+      <div class="row">
+        <input class="grow" v-model="searchKw" placeholder="出演者名（需用日文汉字写法，如 斉藤朱夏）" @keyup.enter="doSearch">
+        <button class="btn" @click="doSearch" :disabled="searching">{{ searching ? '搜索中…' : '搜索' }}</button>
+      </div>
+      <div v-if="searchResults.length" style="margin-top:10px">
+        <div class="search-item" v-for="r in searchResults" :key="r.actor_id">
+          <div>
+            <b>{{ r.name }}</b>
+            <span class="muted"> #{{ r.actor_id }} · ♥ {{ r.favorite_count }}</span>
+          </div>
+          <button v-if="r.watched" class="btn ghost" disabled>已添加</button>
+          <button v-else class="btn" @click="addActor(r)">添加</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <table>
+        <thead><tr><th>出演者</th><th>状态</th><th>上次抓取</th><th></th></tr></thead>
+        <tbody>
+          <tr v-if="!actors.length"><td colspan="4" class="muted">还没有添加出演者，先在上方搜索添加</td></tr>
+          <tr v-for="a in actors" :key="a.actor_id">
+            <td><b>{{ a.name }}</b><div class="muted">#{{ a.actor_id }}</div></td>
+            <td>
+              <span class="tag pill" :class="a.enabled ? 'ok' : 'off'" @click="toggleActor(a)">
+                {{ a.enabled ? '监视中' : '已暂停' }}
+              </span>
+            </td>
+            <td>
+              <template v-if="a.last_fetch_at">
+                <span :class="a.last_fetch_ok ? '' : 'muted'">{{ a.last_fetch_at }}</span>
+                <div v-if="a.last_error" class="muted" :title="a.last_error">⚠ {{ a.last_error.slice(0,30) }}</div>
+              </template>
+              <span v-else class="muted">未抓取</span>
+            </td>
+            <td style="text-align:right"><button class="btn danger" @click="delActor(a)">删除</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="muted">新添加的出演者首次抓取只建立基线（不发通知），之后出现的新活动才会推送。</p>
+    </div>
+  </template>
+
+  <!-- 活动 -->
+  <template v-if="tab==='events'">
+    <div class="card">
+      <div class="row">
+        <b style="font-size:14px">📅 日历订阅</b>
+        <span class="grow"></span>
+        <button class="btn ghost" @click="copyCal">复制订阅链接</button>
+        <a class="btn ghost" style="text-decoration:none" :href="calUrl + (calUrl.includes('?') ? '&all=true' : '?all=true')" target="_blank">打开 .ics</a>
+      </div>
+      <p style="margin:8px 0 0"><code style="font-size:12px;word-break:break-all">{{ calUrl }}</code></p>
+      <p class="muted" style="margin:6px 0 0">
+        在 Google Calendar「其他日历 → 通过网址添加」粘贴该链接。链接实时反映最新抓取结果，
+        Google 会每几小时自动刷新。仅包含未来的活动（含已过期请用 <code>?all=true</code>）。
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <select v-model="eventsActor">
+          <option :value="null">全部出演者</option>
+          <option v-for="a in actors" :value="a.actor_id">{{ a.name }}</option>
+        </select>
+        <label class="row" style="gap:4px"><input type="checkbox" v-model="futureOnly"> 只看未来</label>
+        <span class="grow"></span>
+        <span class="muted">{{ events.length }} 条</span>
+      </div>
+      <table style="margin-top:8px">
+        <thead><tr><th>日期</th><th>活动</th><th>出演者</th><th>会场</th></tr></thead>
+        <tbody>
+          <tr v-if="!events.length"><td colspan="4" class="muted">暂无活动数据（先抓取一次）</td></tr>
+          <tr v-for="e in events" :key="e.actor_id + '-' + e.event_id">
+            <td style="white-space:nowrap">{{ e.date || '未定' }}</td>
+            <td><a :href="e.url" target="_blank">{{ e.name }}</a><div class="muted" v-if="e.open_time">{{ e.open_time }}</div></td>
+            <td>{{ e.actor_name }}</td>
+            <td>{{ e.place }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </template>
+
+  <!-- 设置 -->
+  <template v-if="tab==='settings'">
+    <div class="card">
+      <b>抓取</b>
+      <label class="field">轮询间隔（小时，建议 6-12，即每天 2-4 次）</label>
+      <input type="number" min="1" step="1" v-model.number="settings.poll_interval_hours" style="width:120px">
+    </div>
+
+    <div class="card" v-for="(cfg, key) in settings.notifiers" :key="key">
+      <div class="channel" style="border:0;padding:0">
+        <div class="head">
+          <b>{{ channelLabel(key) }}</b>
+          <label class="switch">
+            <input type="checkbox" v-model="cfg.enabled">
+            <span class="track"></span>
+            <span>{{ cfg.enabled ? '启用' : '停用' }}</span>
+          </label>
+        </div>
+
+        <template v-if="key==='wxpusher'">
+          <label class="field">app_token（wxpusher.zjiecode.com 创建应用获取）</label>
+          <input class="wide" v-model="cfg.app_token">
+          <label class="field">uid（关注公众号后在「用户」页获取）</label>
+          <input class="wide" v-model="cfg.uid">
+        </template>
+        <template v-if="key==='pushplus'">
+          <label class="field">token（pushplus.plus 微信扫码获取）</label>
+          <input class="wide" v-model="cfg.token">
+        </template>
+        <template v-if="key==='email'">
+          <div class="row">
+            <div class="grow"><label class="field">SMTP 服务器</label><input class="wide" v-model="cfg.host"></div>
+            <div><label class="field">端口</label><input type="number" v-model.number="cfg.port" style="width:90px"></div>
+          </div>
+          <div class="row">
+            <div class="grow"><label class="field">用户名</label><input class="wide" v-model="cfg.username"></div>
+            <div class="grow"><label class="field">密码 / 授权码</label><input class="wide" type="password" v-model="cfg.password"></div>
+          </div>
+          <div class="row">
+            <div class="grow"><label class="field">发件地址</label><input class="wide" v-model="cfg.from_addr"></div>
+            <div class="grow"><label class="field">收件地址</label><input class="wide" v-model="cfg.to_addr"></div>
+          </div>
+          <label class="row" style="gap:4px;margin-top:8px"><input type="checkbox" v-model="cfg.use_ssl"> SSL（465 端口；关闭则用 587 STARTTLS）</label>
+        </template>
+      </div>
+    </div>
+
+    <div class="row">
+      <button class="btn" @click="saveSettings" :disabled="savingSettings">{{ savingSettings ? '保存中…' : '保存设置' }}</button>
+      <button class="btn ghost" @click="testNotify" :disabled="testing">{{ testing ? '发送中…' : '发送测试推送' }}</button>
+      <span class="muted">先保存再测试</span>
+    </div>
+  </template>
+
+  <!-- 日志 -->
+  <template v-if="tab==='logs'">
+    <div class="card">
+      <table>
+        <thead><tr><th>时间</th><th>渠道</th><th>标题</th><th>结果</th></tr></thead>
+        <tbody>
+          <tr v-if="!notifications.length"><td colspan="4" class="muted">暂无通知记录</td></tr>
+          <tr v-for="n in notifications" :key="n.id">
+            <td style="white-space:nowrap">{{ n.created_at }}</td>
+            <td>{{ n.channel }}</td>
+            <td>{{ n.title }}</td>
+            <td><span class="tag" :class="n.ok ? 'ok' : 'err'">{{ n.ok ? '成功' : '失败' }}</span>
+                <div v-if="n.error" class="muted">{{ n.error }}</div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </template>
+
+  <div v-if="toast" class="toast">{{ toast }}</div>
+</div>
+
+<script>
+const { createApp, ref, reactive, computed, onMounted, watch } = Vue;
+
+createApp({
+  setup() {
+    const tab = ref('actors');
+    const toast = ref('');
+    const showToast = (msg) => { toast.value = msg; setTimeout(() => toast.value = '', 3000); };
+
+    const status = reactive({ running: false, last_run_at: null, poll_interval_hours: null, actor_count: 0 });
+    const actors = ref([]);
+    const events = ref([]);
+    const notifications = ref([]);
+    const eventsActor = ref(null);
+    const futureOnly = ref(true);
+
+    const settings = reactive({ notifiers: {}, poll_interval_hours: 8 });
+    const savingSettings = ref(false);
+    const testing = ref(false);
+
+    const searchKw = ref('');
+    const searching = ref(false);
+    const searchResults = ref([]);
+
+    const api = async (path, opts = {}) => {
+      const resp = await fetch('/api' + path, {
+        headers: { 'Content-Type': 'application/json' }, ...opts,
+        body: opts.body ? JSON.stringify(opts.body) : undefined,
+      });
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({}));
+        throw new Error(err.detail || resp.statusText);
+      }
+      return resp.json();
+    };
+
+    const refreshStatus = () => api('/status').then(Object.assign.bind(null, status)).catch(() => {});
+    const refreshActors = () => api('/actors').then(d => actors.value = d);
+    const refreshEvents = () => {
+      const p = new URLSearchParams();
+      if (eventsActor.value != null) p.set('actor_id', eventsActor.value);
+      if (futureOnly.value) p.set('future_only', 'true');
+      return api('/events?' + p.toString()).then(d => events.value = d);
+    };
+    const refreshNotifications = () => api('/notifications').then(d => notifications.value = d);
+
+    const doSearch = async () => {
+      if (!searchKw.value.trim()) return;
+      searching.value = true;
+      try {
+        const d = await api('/actors/search?keyword=' + encodeURIComponent(searchKw.value.trim()));
+        searchResults.value = d.results;
+        if (!d.results.length) showToast('没有搜索结果：请使用日文汉字写法（如 斉藤朱夏、藪島朱音）');
+      } catch (e) { showToast('搜索失败: ' + e.message); }
+      finally { searching.value = false; }
+    };
+
+    const addActor = async (r) => {
+      try {
+        await api('/actors', { method: 'POST', body: { actor_id: r.actor_id, name: r.name } });
+        r.watched = true;
+        await refreshActors();
+        showToast('已添加 ' + r.name + '（首次抓取只建基线）');
+      } catch (e) { showToast(e.message); }
+    };
+
+    const toggleActor = async (a) => {
+      await api('/actors/' + a.actor_id, { method: 'PATCH', body: { enabled: !a.enabled } });
+      a.enabled = !a.enabled;
+    };
+
+    const delActor = async (a) => {
+      if (!confirm('删除 ' + a.name + ' 及其活动快照？')) return;
+      await api('/actors/' + a.actor_id, { method: 'DELETE' });
+      await refreshActors();
+    };
+
+    const runNow = async () => {
+      status.running = true;
+      try {
+        const s = await api('/watch/now', { method: 'POST' });
+        const msg = `抓取完成：检查 ${s.checked} 人，失败 ${s.failed}` +
+          (s.new_events ? `，发现 ${s.new_events} 场新活动${s.notified ? '，已推送' : '（推送失败，见日志）'}` : '');
+        showToast(msg);
+      } catch (e) { showToast(e.message); }
+      finally {
+        status.running = false;
+        await Promise.all([refreshStatus(), refreshActors(), refreshEvents(), refreshNotifications()]);
+      }
+    };
+
+    const loadSettings = () => api('/settings').then(d => {
+      Object.keys(settings).forEach(k => delete settings[k]);
+      Object.assign(settings, d);
+    });
+    const saveSettings = async () => {
+      savingSettings.value = true;
+      try {
+        await api('/settings', { method: 'PUT', body: JSON.parse(JSON.stringify(settings)) });
+        showToast('设置已保存');
+      } catch (e) { showToast('保存失败: ' + e.message); }
+      finally { savingSettings.value = false; }
+    };
+    const testNotify = async () => {
+      testing.value = true;
+      try {
+        const r = await api('/settings/test-notify', { method: 'POST' });
+        const parts = Object.entries(r).map(([k, v]) => k + ':' + (v.ok ? '✅' : '❌ ' + v.error));
+        showToast(parts.join(' | '));
+        await refreshNotifications();
+      } catch (e) { showToast(e.message); }
+      finally { testing.value = false; }
+    };
+
+    const channelLabel = (key) => ({ wxpusher: 'WxPusher', pushplus: 'PushPlus', email: '邮件 (SMTP)' }[key] || key);
+
+    const calUrl = computed(() => status.calendar_url
+      ? location.origin + status.calendar_url
+      : location.origin + '/api/calendar.ics');
+    const copyCal = async () => {
+      try { await navigator.clipboard.writeText(calUrl.value); showToast('订阅链接已复制'); }
+      catch { showToast('复制失败，请手动选择复制'); }
+    };
+
+    watch([eventsActor, futureOnly], refreshEvents);
+    watch(tab, (t) => {
+      if (t === 'events') refreshEvents();
+      if (t === 'logs') refreshNotifications();
+    });
+
+    onMounted(async () => {
+      await Promise.all([refreshStatus(), refreshActors(), loadSettings()]);
+      setInterval(refreshStatus, 15000);
+    });
+
+    return {
+      tab, toast, status, actors, events, notifications, eventsActor, futureOnly,
+      settings, savingSettings, testing, searchKw, searching, searchResults,
+      doSearch, addActor, toggleActor, delActor, runNow, saveSettings, testNotify, channelLabel,
+      calUrl, copyCal,
+    };
+  },
+}).mount('#app');
+</script>
+</body>
+</html>

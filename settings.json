@@ -1,0 +1,12 @@
+{
+  "poll_interval_hours": 8,
+  "fetch_delay_seconds": [3, 8],
+  "notifiers": {
+    "wxpusher": {"enabled": false, "app_token": "", "uid": ""},
+    "pushplus": {"enabled": false, "token": ""},
+    "email": {
+      "enabled": false, "host": "", "port": 465, "username": "",
+      "password": "", "from_addr": "", "to_addr": "", "use_ssl": true
+    }
+  }
+}

@@ -1,0 +1,53 @@
+name: watch
+
+on:
+  schedule:
+    # UTC 时间, 每天 3 次 (北京 01:07 / 09:07 / 17:07), 分钟错开整点降低延迟
+    - cron: '7 1,9,17 * * *'
+  workflow_dispatch: {}   # 支持手动触发, 兼作"立即抓取"
+
+permissions:
+  contents: write          # 提交数据库和 calendar.ics 回仓库
+
+concurrency:
+  group: watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install deps
+        run: pip install -r requirements.txt
+
+      - name: Run watcher
+        env:
+          # 密钥全部来自 GitHub Secrets, 按需配置; 未配置的渠道自动禁用
+          WXPUSHER_APP_TOKEN: ${{ secrets.WXPUSHER_APP_TOKEN }}
+          WXPUSHER_UID: ${{ secrets.WXPUSHER_UID }}
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+          EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+          EMAIL_USERNAME: ${{ secrets.EMAIL_USERNAME }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+        run: python scripts/run_once.py
+
+      - name: Commit state and publish ics
+        run: |
+          git config user.name "watcher-bot"
+          git config user.email "actions@github.com"
+          git add data/ site/
+          if git diff --staged --quiet; then
+            # 无变更也 touch 时间戳, 保持仓库活跃避免 scheduled workflow 被 60 天规则停用
+            date -u +%Y-%m-%dT%H:%M:%SZ > site/last_run.txt
+            git add site/last_run.txt
+          fi
+          git commit -m "watch: $(date -u +%F_%H:%M) [skip ci]"
+          git push
