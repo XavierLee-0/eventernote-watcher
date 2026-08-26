@@ -184,6 +184,44 @@ class Database:
         with self._conn() as c:
             return [dict(r) for r in c.execute(q, args).fetchall()]
 
+    # ---------- 配置导出/导入 ----------
+    def export_snapshot(self) -> list[dict]:
+        """导出活动快照(seen_events + events_cache + 出演者基线状态)。"""
+        with self._conn() as c:
+            seen = [
+                dict(r) for r in c.execute(
+                    "SELECT actor_id, event_id, name, date, place FROM seen_events"
+                ).fetchall()
+            ]
+            cache = [
+                dict(r) for r in c.execute(
+                    "SELECT actor_id, event_id, name, date, place, open_time, url FROM events_cache"
+                ).fetchall()
+            ]
+        return {"seen_events": seen, "events_cache": cache}
+
+    def import_snapshot(self, snapshot: dict) -> None:
+        """恢复活动快照。会先清掉该出演者已有的快照, 以导入数据为准。"""
+        with self._lock, self._conn() as c:
+            for row in snapshot.get("seen_events", []):
+                c.execute(
+                    "INSERT OR REPLACE INTO seen_events(actor_id, event_id, name, date, place) "
+                    "VALUES (?,?,?,?,?)",
+                    (row["actor_id"], row["event_id"], row.get("name"),
+                     row.get("date"), row.get("place")),
+                )
+            for row in snapshot.get("events_cache", []):
+                c.execute(
+                    "INSERT OR REPLACE INTO events_cache"
+                    "(actor_id, event_id, name, date, place, open_time, url) "
+                    "VALUES (?,?,?,?,?,?,?)",
+                    (row["actor_id"], row["event_id"], row.get("name"), row.get("date"),
+                     row.get("place"), row.get("open_time"), row.get("url")),
+                )
+
+    def set_baselined(self, actor_id: int, baselined: bool) -> None:
+        self.update_actor(actor_id, baselined=baselined)
+
     # ---------- notifications ----------
     def log_notification(self, actor_id: int | None, event_id: int | None,
                          channel: str, title: str, ok: bool, error: str | None = None) -> None:

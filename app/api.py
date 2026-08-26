@@ -121,22 +121,27 @@ def create_router(db: Database, watcher: Watcher) -> APIRouter:
     # ---------- 配置导出/导入 ----------
     @router.get("/export")
     def export_config():
-        """导出出演者列表 + 设置(含通知渠道 token)。文件含密钥, 注意保管。"""
-        actors = [
-            {"actor_id": a["actor_id"], "name": a["name"], "enabled": bool(a["enabled"])}
-            for a in db.list_actors()
-        ]
+        """导出演者列表 + 设置 + 活动快照。文件含通知渠道 token, 注意保管。"""
+        actors = db.list_actors()
+        snapshot = db.export_snapshot()
         return {
-            "version": 1,
+            "version": 2,
             "exported_at": __import__("datetime").datetime.now().isoformat(timespec="seconds"),
-            "actors": actors,
+            "actors": [
+                {
+                    "actor_id": a["actor_id"], "name": a["name"],
+                    "enabled": bool(a["enabled"]), "baselined": bool(a["baselined"]),
+                }
+                for a in actors
+            ],
             "settings": db.get_settings(),
+            "snapshot": snapshot,
         }
 
     @router.post("/import")
     def import_config(body: dict):
-        """导入配置: 以文件为准替换出演者列表, 合并设置。活动快照不随配置走,
-        导入后首次抓取自动重建基线(不触发推送)。"""
+        """导入配置: 以文件为准替换出演者列表, 合并设置; v2 格式含活动快照,
+        恢复后无需重建基线、无漏报窗口。v1 旧格式(无快照)仍可导入, 走重建基线路径。"""
         if not isinstance(body, dict) or "actors" not in body or "settings" not in body:
             raise HTTPException(400, "文件格式不正确: 需要 actors 和 settings 字段")
         actors = body["actors"]
@@ -145,6 +150,7 @@ def create_router(db: Database, watcher: Watcher) -> APIRouter:
         for a in actors:
             if not isinstance(a, dict) or "actor_id" not in a or "name" not in a:
                 raise HTTPException(400, "actors 中存在缺少 actor_id/name 的条目")
+
         # 替换出演者列表
         keep = {a["actor_id"] for a in actors}
         for row in db.list_actors():
@@ -156,9 +162,18 @@ def create_router(db: Database, watcher: Watcher) -> APIRouter:
                     db.update_actor(a["actor_id"], enabled=False)
             else:
                 db.update_actor(a["actor_id"], enabled=a.get("enabled", True))
+
+        # 恢复活动快照(v2): 恢复 baselined 状态与已见活动, 迁移后无缝衔接
+        snapshot = body.get("snapshot")
+        if snapshot:
+            db.import_snapshot(snapshot)
+            for a in actors:
+                if a.get("baselined"):
+                    db.set_baselined(a["actor_id"], True)
+
         # 合并设置(以导入文件为准)
         db.save_settings(body["settings"])
-        return {"ok": True, "actor_count": len(actors)}
+        return {"ok": True, "actor_count": len(actors), "snapshot_restored": bool(snapshot)}
 
     # ---------- 调度 ----------
     @router.get("/calendar.ics")

@@ -224,7 +224,7 @@
 
     <div class="card">
       <b>配置备份</b>
-      <p class="muted" style="margin:8px 0">导出演者列表和全部设置（含通知渠道 token），用于迁移部署或备份。<b>文件含密钥，请妥善保管。</b>导入会替换当前出演者列表；活动快照不随配置走，导入后首次抓取自动重建基线。</p>
+      <p class="muted" style="margin:8px 0">导出演者列表、全部设置（含通知渠道 token）和活动快照，用于迁移部署或备份。<b>文件含密钥，请妥善保管。</b>导入会替换当前出演者列表；含快照的导入可无缝衔接（不重建基线、不漏报），旧版无快照文件导入后首次抓取重建基线。</p>
       <div class="row">
         <button class="btn ghost" @click="exportConfig">导出配置</button>
         <button class="btn ghost" @click="$refs.importFile.click()" :disabled="importing">{{ importing ? '导入中…' : '导入配置' }}</button>
