@@ -83,6 +83,20 @@
           <button v-else class="btn" @click="addActor(r)">添加</button>
         </div>
       </div>
+      <p class="muted" style="margin:10px 0 0">
+        搜不到？可能是同名/相似名过多或站点搜索排序问题。可先试日文读法（如搜「イコールラブ」找 =LOVE），
+        或用下方手动添加。
+      </p>
+    </div>
+
+    <div class="card">
+      <b style="font-size:14px">手动添加</b>
+      <div class="row" style="margin-top:8px">
+        <input v-model.number="manualId" type="number" placeholder="actor_id（出演者页面 URL 末尾数字）" style="width:280px">
+        <input v-model="manualName" placeholder="出演者名（仅用于显示）" style="width:200px">
+        <button class="btn" @click="addManual" :disabled="!manualId || !manualName">添加</button>
+      </div>
+      <p class="muted" style="margin:8px 0 0">打开出演者的 Eventernote 页面，URL 形如 <code>/actors/斉藤朱夏/15436</code>，末尾数字即 actor_id。名字只影响显示，抓取按 actor_id 进行。</p>
     </div>
 
     <div class="card">
@@ -264,6 +278,18 @@ createApp({
     const searchKw = ref('');
     const searching = ref(false);
     const searchResults = ref([]);
+    const manualId = ref(null);
+    const manualName = ref('');
+
+    const addManual = async () => {
+      if (!manualId.value || !manualName.value.trim()) return;
+      try {
+        await api('/actors', { method: 'POST', body: { actor_id: manualId.value, name: manualName.value.trim() } });
+        await refreshActors();
+        showToast(`已添加 ${manualName.value.trim()}（首次抓取只建基线）`);
+        manualId.value = null; manualName.value = '';
+      } catch (e) { showToast(e.message); }
+    };
 
     const api = async (path, opts = {}) => {
       const resp = await fetch('/api' + path, {
@@ -413,7 +439,7 @@ createApp({
       tab, toast, status, actors, events, notifications, eventsActor, futureOnly,
       settings, savingSettings, testing, searchKw, searching, searchResults,
       doSearch, addActor, toggleActor, delActor, runNow, saveSettings, testNotify, channelLabel,
-      calUrl, copyCal, exportConfig, importConfig, importing,
+      calUrl, copyCal, exportConfig, importConfig, importing, manualId, manualName, addManual,
     };
   },
 }).mount('#app');

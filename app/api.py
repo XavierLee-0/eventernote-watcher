@@ -66,6 +66,19 @@ def create_router(db: Database, watcher: Watcher) -> APIRouter:
         ) as client:
             results = await search_actors(client, keyword.strip(), page)
         watched = {a["actor_id"] for a in db.list_actors()}
+        # 站点 API 不按匹配度排序, 精确匹配的条目可能被相似名淹没:
+        # 按 精确匹配 > 前缀匹配 > 其他 重排, 大小写不敏感
+        kw = keyword.strip().casefold()
+
+        def rank(r):
+            name = r.name.casefold()
+            if name == kw:
+                return 0
+            if name.startswith(kw):
+                return 1
+            return 2
+
+        results.sort(key=rank)
         return {
             "results": [
                 {**r.__dict__, "watched": r.actor_id in watched} for r in results
