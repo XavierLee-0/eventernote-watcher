@@ -1,5 +1,9 @@
 FROM python:3.12-slim
 
+# 时区: 默认北京时间, 可在部署时用 TZ 环境变量覆盖 (如 Asia/Tokyo)
+RUN apt-get update && apt-get install -y --no-install-recommends tzdata && rm -rf /var/lib/apt/lists/*
+ENV TZ=Asia/Shanghai
+
 WORKDIR /app
 
 COPY requirements.txt .

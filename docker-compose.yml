@@ -8,6 +8,8 @@ services:
     volumes:
       - ./data:/data
     environment:
+      # 时区, 默认北京时间 (镜像内置), 需要时改为其他 IANA 时区名
+      - TZ=${TZ:-Asia/Shanghai}
       # 公网部署务必设置; 留空则不启用鉴权(仅限局域网)
       - AUTH_PASSWORD=${AUTH_PASSWORD:-}
       - ICS_TOKEN=${ICS_TOKEN:-}
