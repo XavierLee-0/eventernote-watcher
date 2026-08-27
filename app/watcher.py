@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import asyncio
+import html as html_mod
 import logging
 import random
 import re
@@ -188,8 +189,20 @@ class Watcher:
                 lines.append(f"- [{ev.name}]({ev.url()})  \n  {when}{place}")
                 rows.append((actor["name"], ev))
             lines.append("")
+        # 底部: 每位出演者本次新增场数(一人一行) + 总场数
+        total_new = sum(len(f) for _, f in new_items)
+        count_lines = [f"{a['name']} {len(f)} 场" for a, f in new_items]
+        count_lines.append(f"合计 {total_new} 场")
+        lines.append("---\n本次新增：\n" + "\n".join(count_lines))
         content = "\n".join(lines)
         html = self._events_table_html(rows)
+        footer = "本次新增：" + "<br>".join(
+            html_mod.escape(c) for c in count_lines
+        )
+        html += (
+            '<p style="font-size:12px;color:#718096;margin-top:10px;">'
+            f"{footer}</p>"
+        )
 
         notifiers = build_all(self.db.get_settings().get("notifiers", {}))
         if not notifiers:
