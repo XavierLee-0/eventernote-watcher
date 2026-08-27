@@ -7,7 +7,9 @@ import threading
 from pathlib import Path
 
 _DEFAULT_SETTINGS = {
-    "poll_interval_hours": 8,  # 每天 2-4 次
+    # 定点模式: 每天这些时刻抓取(本地时区), 优先于间隔模式; 留空则用间隔模式
+    "poll_schedule": "01:00,09:00,17:00",
+    "poll_interval_hours": 8,  # 间隔模式的间隔(小时), 仅当 poll_schedule 为空时生效
     "fetch_delay_seconds": [3, 8],  # 出演者之间的随机间隔
     "notifiers": {
         "wxpusher": {"enabled": False, "app_token": "", "uid": ""},
@@ -69,6 +71,17 @@ CREATE TABLE IF NOT EXISTS events_cache (
 """
 
 
+def _merge_settings(base: dict, override: dict) -> dict:
+    """深合并: override 优先, 缺失的键从 base(默认值) 补齐。"""
+    out = dict(base)
+    for k, v in override.items():
+        if isinstance(v, dict) and isinstance(out.get(k), dict):
+            out[k] = _merge_settings(out[k], v)
+        else:
+            out[k] = v
+    return out
+
+
 class Database:
     def __init__(self, path: Path):
         self.path = path
@@ -92,7 +105,9 @@ class Database:
     def get_settings(self) -> dict:
         with self._conn() as c:
             row = c.execute("SELECT value FROM settings WHERE key='app'").fetchone()
-            return json.loads(row["value"]) if row else dict(_DEFAULT_SETTINGS)
+        stored = json.loads(row["value"]) if row else {}
+        # 与默认值合并, 让旧数据库自动获得新增的设置项(如 poll_schedule)
+        return _merge_settings(dict(_DEFAULT_SETTINGS), stored)
 
     def save_settings(self, settings: dict) -> None:
         with self._lock, self._conn() as c:

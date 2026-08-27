@@ -198,6 +198,8 @@ def create_router(db: Database, watcher: Watcher) -> APIRouter:
         return {
             "running": watcher.running,
             "last_run_at": watcher.last_run_at,
+            "next_run_at": watcher.next_run_at,
+            "poll_schedule": settings.get("poll_schedule", ""),
             "poll_interval_hours": settings.get("poll_interval_hours"),
             "actor_count": len(db.list_actors()),
             # 完整订阅链接(含 token), 已在 Basic Auth 保护之内

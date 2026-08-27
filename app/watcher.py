@@ -4,7 +4,8 @@ from __future__ import annotations
 import asyncio
 import logging
 import random
-from datetime import datetime
+import re
+from datetime import datetime, timedelta
 
 import httpx
 
@@ -14,6 +15,22 @@ from .notifiers import build_all
 
 log = logging.getLogger(__name__)
 
+_TIME_RE = re.compile(r"^(\d{1,2}):(\d{2})$")
+
+
+def _parse_schedule(sched) -> list[tuple[int, int]]:
+    """解析 "01:00,09:00,17:00" 为 [(h, m), ...], 忽略非法片段。"""
+    times = []
+    if not sched:
+        return times
+    for part in str(sched).split(","):
+        m = _TIME_RE.match(part.strip())
+        if m:
+            h, mi = int(m.group(1)), int(m.group(2))
+            if h < 24 and mi < 60:
+                times.append((h, mi))
+    return sorted(set(times))
+
 
 class Watcher:
     def __init__(self, db: Database):
@@ -22,6 +39,7 @@ class Watcher:
         self._wake = asyncio.Event()
         self._running = False
         self._last_run_at: str | None = None
+        self._next_run_at: str | None = None
 
     # ---------- 生命周期 ----------
     async def start(self):
@@ -40,21 +58,53 @@ class Watcher:
         self._wake.set()
 
     # ---------- 轮询 ----------
+    def _next_delay(self, settings: dict) -> float:
+        """计算到下次抓取的秒数。
+
+        定点模式(poll_schedule 非空): 睡到下一个预定时刻(精确, 无抖动);
+        间隔模式(回退): poll_interval_hours 小时 ±10%。
+        """
+        times = _parse_schedule(settings.get("poll_schedule"))
+        if times:
+            now = datetime.now()
+            candidates = []
+            for h, mi in times:
+                t = now.replace(hour=h, minute=mi, second=0, microsecond=0)
+                if t <= now:
+                    t += timedelta(days=1)
+                candidates.append(t)
+            nxt = min(candidates)
+            self._next_run_at = nxt.isoformat(timespec="minutes")
+            return (nxt - now).total_seconds()
+        hours = float(settings.get("poll_interval_hours", 8))
+        self._next_run_at = None
+        return hours * 3600 * random.uniform(0.9, 1.1)
+
     async def _loop(self):
         while True:
             try:
                 await self.run_once()
             except Exception:
                 log.exception("watch cycle failed")
-            settings = self.db.get_settings()
-            hours = float(settings.get("poll_interval_hours", 8))
-            delay = hours * 3600 * random.uniform(0.9, 1.1)
-            # 可被 trigger_now 提前唤醒
+            await self._sleep_until_next()
+
+    async def _sleep_until_next(self):
+        """睡到下次抓取时刻。分段睡眠(最长15分钟一段), 每段醒来重读设置,
+        让 WebUI 修改定点/间隔配置即时生效; 期间可被 trigger_now 提前唤醒。"""
+        CHUNK = 900
+        while True:
+            delay = self._next_delay(self.db.get_settings())
+            if delay <= 1:
+                return
+            step = min(delay, CHUNK)
             self._wake.clear()
             try:
-                await asyncio.wait_for(self._wake.wait(), timeout=delay)
+                await asyncio.wait_for(self._wake.wait(), timeout=step)
+                return  # 手动触发
             except asyncio.TimeoutError:
-                pass
+                if delay <= CHUNK + 1:
+                    return  # 已到点
+                # 未到点但一段结束: 继续循环, 顺便让设置变更生效
 
     # ---------- 单轮 ----------
     async def run_once(self) -> dict:
@@ -131,6 +181,10 @@ class Watcher:
     @property
     def running(self) -> bool:
         return self._running
+
+    @property
+    def next_run_at(self) -> str | None:
+        return self._next_run_at
 
     @property
     def last_run_at(self) -> str | None:

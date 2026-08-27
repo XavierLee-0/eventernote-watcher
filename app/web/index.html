@@ -52,7 +52,10 @@
   <header>
     <h1>🎤 Eventernote Watcher</h1>
     <div class="row">
-      <span class="muted">{{ status.last_run_at ? '上次抓取 ' + status.last_run_at : '尚未抓取' }}</span>
+      <span class="muted">
+        {{ status.last_run_at ? '上次抓取 ' + status.last_run_at : '尚未抓取' }}
+        <template v-if="status.next_run_at"> · 下次 {{ status.next_run_at }}</template>
+      </span>
       <button class="btn" :disabled="status.running" @click="runNow">
         {{ status.running ? '抓取中…' : '立即抓取' }}
       </button>
@@ -173,8 +176,11 @@
   <template v-if="tab==='settings'">
     <div class="card">
       <b>抓取</b>
-      <label class="field">轮询间隔（小时，建议 6-12，即每天 2-4 次）</label>
+      <label class="field">每日定点时刻（逗号分隔的 HH:MM，按容器时区，默认北京时间；留空则改用下方间隔模式）</label>
+      <input class="wide" v-model="settings.poll_schedule" placeholder="如 01:00, 09:00, 17:00">
+      <label class="field">间隔模式（仅当定点时刻留空时生效，单位小时）</label>
       <input type="number" min="1" step="1" v-model.number="settings.poll_interval_hours" style="width:120px">
+      <p class="muted" style="margin:8px 0 0">当前模式：<b>{{ settings.poll_schedule ? '定点 (' + settings.poll_schedule + ')' : '间隔 ' + settings.poll_interval_hours + ' 小时' }}</b>，保存后最多 15 分钟内生效。抓取太频繁想减少次数：减少定点时刻的个数，或调大间隔。</p>
     </div>
 
     <div class="card" v-for="(cfg, key) in settings.notifiers" :key="key">
@@ -264,7 +270,7 @@ createApp({
     const toast = ref('');
     const showToast = (msg) => { toast.value = msg; setTimeout(() => toast.value = '', 3000); };
 
-    const status = reactive({ running: false, last_run_at: null, poll_interval_hours: null, actor_count: 0 });
+    const status = reactive({ running: false, last_run_at: null, next_run_at: null, poll_interval_hours: null, actor_count: 0, calendar_url: null });
     const actors = ref([]);
     const events = ref([]);
     const notifications = ref([]);
