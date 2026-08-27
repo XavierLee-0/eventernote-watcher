@@ -225,7 +225,8 @@
     <div class="row">
       <button class="btn" @click="saveSettings" :disabled="savingSettings">{{ savingSettings ? '保存中…' : '保存设置' }}</button>
       <button class="btn ghost" @click="testNotify" :disabled="testing">{{ testing ? '发送中…' : '发送测试推送' }}</button>
-      <span class="muted">先保存再测试</span>
+      <button class="btn ghost" @click="simulateNotify" :disabled="simulating">{{ simulating ? '发送中…' : '模拟新活动通知' }}</button>
+      <span class="muted">「测试推送」只验证渠道连通；「模拟新活动通知」用真实活动数据走完整通知流程（内容与真实新活动完全一致），适合预览邮件/推送的效果</span>
     </div>
 
     <div class="card">
@@ -280,6 +281,7 @@ createApp({
     const settings = reactive({ notifiers: {}, poll_interval_hours: 8 });
     const savingSettings = ref(false);
     const testing = ref(false);
+    const simulating = ref(false);
 
     const searchKw = ref('');
     const searching = ref(false);
@@ -387,6 +389,16 @@ createApp({
       finally { testing.value = false; }
     };
 
+    const simulateNotify = async () => {
+      simulating.value = true;
+      try {
+        const r = await api('/watch/simulate', { method: 'POST' });
+        showToast(`模拟通知已发送（${r.actors} 位出演者的最近活动），请查看各渠道实际效果`);
+        await refreshNotifications();
+      } catch (e) { showToast(e.message); }
+      finally { simulating.value = false; }
+    };
+
     const channelLabel = (key) => ({ wxpusher: 'WxPusher', pushplus: 'PushPlus', email: '邮件 (SMTP)' }[key] || key);
 
     const calUrl = computed(() => status.calendar_url
@@ -444,7 +456,7 @@ createApp({
     return {
       tab, toast, status, actors, events, notifications, eventsActor, futureOnly,
       settings, savingSettings, testing, searchKw, searching, searchResults,
-      doSearch, addActor, toggleActor, delActor, runNow, saveSettings, testNotify, channelLabel,
+      doSearch, addActor, toggleActor, delActor, runNow, saveSettings, testNotify, simulateNotify, channelLabel,
       calUrl, copyCal, exportConfig, importConfig, importing, manualId, manualName, addManual,
     };
   },

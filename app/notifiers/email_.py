@@ -15,6 +15,11 @@ def _recipients(to_addr: str) -> list[str]:
     return [a.strip() for a in re.split(r"[,;，；]", to_addr) if a.strip()]
 
 
+def _plain_text(content: str) -> str:
+    """邮件是纯文本, 把通知里的 Markdown 链接 [文字](url) 转成 文字 (url)。"""
+    return re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r"\1 (\2)", content)
+
+
 @register
 class EmailNotifier(Notifier):
     name = "email"
@@ -29,7 +34,7 @@ class EmailNotifier(Notifier):
     async def send(self, title: str, content: str) -> None:
         cfg = self.config
         recipients = _recipients(cfg["to_addr"])
-        msg = MIMEText(content, "plain", "utf-8")
+        msg = MIMEText(_plain_text(content), "plain", "utf-8")
         msg["Subject"] = Header(title, "utf-8")
         msg["From"] = formataddr(("Eventernote Watcher", cfg["from_addr"]))
         msg["To"] = ", ".join(recipients)

@@ -185,6 +185,14 @@ def create_router(db: Database, watcher: Watcher) -> APIRouter:
             headers={"Content-Disposition": 'inline; filename="calendar.ics"'},
         )
 
+    @router.post("/watch/simulate")
+    async def simulate_notify():
+        """用真实活动数据走一遍完整通知流程, 验证通知内容/格式用。"""
+        result = await watcher.simulate_notify()
+        if not result.get("ok") and result.get("error"):
+            raise HTTPException(400, result["error"])
+        return result
+
     @router.post("/watch/now")
     async def watch_now():
         if watcher.running:

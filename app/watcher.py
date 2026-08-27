@@ -148,10 +148,36 @@ class Watcher:
         finally:
             self._running = False
 
-    async def _notify(self, new_items: list[tuple[dict, list]]) -> bool:
+    async def simulate_notify(self) -> dict:
+        """用已抓取的真实活动数据走一遍完整通知流程(与真实新活动同一代码路径)。
+
+        用于验证通知内容与格式, 标题带 [测试] 前缀, 不影响去重状态。
+        """
+        actors = [a for a in self.db.list_actors() if a["enabled"]]
+        new_items: list[tuple[dict, list]] = []
+        for actor in actors:
+            events = self.db.list_events(actor["actor_id"], future_only=True)
+            if events:
+                # 取最近 10 场(不足则全部), 用 Event 结构还原
+                from .fetcher import Event
+
+                new_items.append((actor, [
+                    Event(
+                        event_id=ev["event_id"], name=ev["name"], date=ev["date"],
+                        place=ev["place"], open_time=ev.get("open_time", ""),
+                    )
+                    for ev in events[:10]
+                ]))
+        if not new_items:
+            return {"ok": False, "error": "没有可用的活动数据, 请先抓取一次"}
+        ok = await self._notify(new_items, test=True)
+        return {"ok": ok, "actors": len(new_items)}
+
+    async def _notify(self, new_items: list[tuple[dict, list]], test: bool = False) -> bool:
         total = sum(len(f) for _, f in new_items)
-        actor_names = ", ".join(a["name"] for a, _ in new_items)
         title = f"Eventernote: {len(new_items)} 位出演者有 {total} 场新活动"
+        if test:
+            title = "[测试] " + title
         lines = []
         for actor, fresh in new_items:
             lines.append(f"## {actor['name']}")
