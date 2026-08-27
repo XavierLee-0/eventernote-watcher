@@ -63,8 +63,10 @@ def generate_ics(db: Database, include_past: bool = False) -> str:
         desc = [f"出演者: {actors}", ev["url"]]
         if ev["open_time"]:
             desc.append(ev["open_time"])
+        # 标题带上出演者名: 「出演者」活动名 (多位共同出演时全部列出)
+        summary = f"「{actors}」{ev['name']}"
         lines.append(_fold(f"DESCRIPTION:{_escape(chr(10).join(desc))}"))
-        lines.append(_fold(f"SUMMARY:{_escape(ev['name'])}"))
+        lines.append(_fold(f"SUMMARY:{_escape(summary)}"))
         if ev["place"]:
             lines.append(_fold(f"LOCATION:{_escape(ev['place'])}"))
         lines.append(f"URL:{ev['url']}")
