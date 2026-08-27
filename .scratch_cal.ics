@@ -1,0 +1,1142 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//eventernote-watcher//CN
+CALSCALE:GREGORIAN
+X-WR-CALNAME:Eventernote 活动
+BEGIN:VEVENT
+UID:465383@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20260905
+DTEND;VALUE=DATE:20260905
+DESCRIPTION:出演者: 結那、岬なこ、Liella!、薮島朱音\nhttps:/
+ /www.eventernote.com/events/465383\n開場 13:00 開演 14:00 終演 16:00
+SUMMARY:「結那、岬なこ、Liella!、薮島朱音」ラブライブ！
+ スーパースター!! Liella! 結女体育祭 1日目 昼の部
+LOCATION:東京体育館 メインアリーナ
+URL:https://www.eventernote.com/events/465383
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ラブライブ！スーパースター!! Liella! 結女体育祭 1日目 昼の部
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:478488@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20260905
+DTEND;VALUE=DATE:20260905
+DESCRIPTION:出演者: 結那、岬なこ、Liella!、薮島朱音\nhttps:/
+ /www.eventernote.com/events/478488\n開場 17:30 開演 18:30 終演 20:30
+SUMMARY:「結那、岬なこ、Liella!、薮島朱音」ラブライブ！
+ スーパースター!! Liella! 結女体育祭 1日目 夜の部
+LOCATION:東京体育館 メインアリーナ
+URL:https://www.eventernote.com/events/478488
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ラブライブ！スーパースター!! Liella! 結女体育祭 1日目 夜の部
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:465384@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20260906
+DTEND;VALUE=DATE:20260906
+DESCRIPTION:出演者: Aqours、斉藤朱夏、結那、岬なこ、Liella!
+ 、薮島朱音\nhttps://www.eventernote.com/events/465384\n開場 13:00 
+ 開演 14:00 終演 16:00
+SUMMARY:「Aqours、斉藤朱夏、結那、岬なこ、Liella!、薮島朱
+ 音」ラブライブ！スーパースター!! Liella! 結女体育祭 2
+ 日目 昼の部
+LOCATION:東京体育館 メインアリーナ
+URL:https://www.eventernote.com/events/465384
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ラブライブ！スーパースター!! Liella! 結女体育祭 2日目 昼の部
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:478489@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20260906
+DTEND;VALUE=DATE:20260906
+DESCRIPTION:出演者: Aqours、斉藤朱夏、結那、岬なこ、Liella!
+ 、薮島朱音\nhttps://www.eventernote.com/events/478489\n開場 17:30 
+ 開演 18:30 終演 20:30
+SUMMARY:「Aqours、斉藤朱夏、結那、岬なこ、Liella!、薮島朱
+ 音」ラブライブ！スーパースター!! Liella! 結女体育祭 2
+ 日目 夜の部
+LOCATION:東京体育館 メインアリーナ
+URL:https://www.eventernote.com/events/478489
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ラブライブ！スーパースター!! Liella! 結女体育祭 2日目 夜の部
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:483709@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20260906
+DTEND;VALUE=DATE:20260906
+DESCRIPTION:出演者: =LOVE\nhttps://www.eventernote.com/events/483709\n
+ 開場 10:30 開演 11:00 終演 16:30
+SUMMARY:「=LOVE」＝LOVE 21stシングル発売記念 個別お話し会9
+ /6
+LOCATION:東京ビッグサイト(東京国際展示場)
+URL:https://www.eventernote.com/events/483709
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:＝LOVE 21stシングル発売記念 個別お話し会9/6
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:478107@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20260907
+DTEND;VALUE=DATE:20260907
+DESCRIPTION:出演者: 結那\nhttps://www.eventernote.com/events/478107\n
+ 開場 18:15 開演 19:00 終演 20:30
+SUMMARY:「結那」LustQueen「The story resumes EXTRA」
+LOCATION:下北沢シャングリラ
+URL:https://www.eventernote.com/events/478107
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:LustQueen「The story resumes EXTRA」
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:485525@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20260907
+DTEND;VALUE=DATE:20260907
+DESCRIPTION:出演者: 斉藤朱夏\nhttps://www.eventernote.com/events/485
+ 525\n開場 14:25 開演 14:45 終演 19:30
+SUMMARY:「斉藤朱夏」A'nimyk WONDER LIVE
+LOCATION:duo MUSIC EXCHANGE
+URL:https://www.eventernote.com/events/485525
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:A'nimyk WONDER LIVE
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:478108@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20260908
+DTEND;VALUE=DATE:20260908
+DESCRIPTION:出演者: 結那\nhttps://www.eventernote.com/events/478108\n
+ 開場 18:15 開演 19:00 終演 20:30
+SUMMARY:「結那」LustQueen「Stairway to Queen vol.5」
+LOCATION:下北沢シャングリラ
+URL:https://www.eventernote.com/events/478108
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:LustQueen「Stairway to Queen vol.5」
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:476491@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20260911
+DTEND;VALUE=DATE:20260911
+DESCRIPTION:出演者: ClariS\nhttps://www.eventernote.com/events/476491\n
+ 開場 17:30 開演 18:30 終演 21:00
+SUMMARY:「ClariS」ClariS 15th Thanks Tour 〜 一夏灯祭 〜愛知公
+ 演
+LOCATION:Zepp Nagoya
+URL:https://www.eventernote.com/events/476491
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ClariS 15th Thanks Tour 〜 一夏灯祭 〜愛知公演
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:483858@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20260912
+DTEND;VALUE=DATE:20260912
+DESCRIPTION:出演者: =LOVE\nhttps://www.eventernote.com/events/483858\n
+ 開場 10:30 開演 11:00 終演 16:30
+SUMMARY:「=LOVE」＝LOVE 21stシングル発売記念 ツーショット
+ 撮影会
+LOCATION:幕張メッセ 国際展示場ホール
+URL:https://www.eventernote.com/events/483858
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:＝LOVE 21stシングル発売記念 ツーショット撮影会
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:476492@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20260913
+DTEND;VALUE=DATE:20260913
+DESCRIPTION:出演者: ClariS\nhttps://www.eventernote.com/events/476492\n
+ 開場 17:00 開演 18:00 終演 20:30
+SUMMARY:「ClariS」ClariS 15th Thanks Tour 〜 一夏灯祭 〜大阪公
+ 演
+LOCATION:オリックス劇場
+URL:https://www.eventernote.com/events/476492
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ClariS 15th Thanks Tour 〜 一夏灯祭 〜大阪公演
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:483857@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20260913
+DTEND;VALUE=DATE:20260913
+DESCRIPTION:出演者: =LOVE\nhttps://www.eventernote.com/events/483857\n
+ 開場 10:30 開演 11:00 終演 16:30
+SUMMARY:「=LOVE」＝LOVE 21stシングル発売記念 スリーショッ
+ ト撮影会
+LOCATION:幕張メッセ 国際展示場ホール
+URL:https://www.eventernote.com/events/483857
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:＝LOVE 21stシングル発売記念 スリーショット撮影会
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:488408@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20260913
+DTEND;VALUE=DATE:20260913
+DESCRIPTION:出演者: 岬なこ\nhttps://www.eventernote.com/events/488408
+ \n開場 17:00 開演 17:30 終演 19:30
+SUMMARY:「岬なこ」NAKO MISAKI Extra Live Concert Reflection
+LOCATION:PORTAL
+URL:https://www.eventernote.com/events/488408
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:NAKO MISAKI Extra Live Concert Reflection
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:481880@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20260918
+DTEND;VALUE=DATE:20260918
+DESCRIPTION:出演者: ClariS\nhttps://www.eventernote.com/events/481880\n
+ 開場 17:30 開演 18:30 終演 21:00
+SUMMARY:「ClariS」ClariS 15th Thanks Tour 〜一夏灯祭〜 結夜（む
+ すびよ）
+LOCATION:SGC HALL ARIAKE(SGCホール有明)
+URL:https://www.eventernote.com/events/481880
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ClariS 15th Thanks Tour 〜一夏灯祭〜 結夜（むすびよ）
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:467554@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20260919
+DTEND;VALUE=DATE:20260919
+DESCRIPTION:出演者: 斉藤朱夏\nhttps://www.eventernote.com/events/467
+ 554
+SUMMARY:「斉藤朱夏」Remember Girl’s Power !! 2026【DAY3】
+LOCATION:池袋西口公園野外劇場 グローバルリングシアタ
+ ー
+URL:https://www.eventernote.com/events/467554
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Remember Girl’s Power !! 2026【DAY3】
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:479208@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20260919
+DTEND;VALUE=DATE:20260919
+DESCRIPTION:出演者: =LOVE\nhttps://www.eventernote.com/events/479208\n
+ 開場 08:30 開演 11:45 終演 20:15
+SUMMARY:「=LOVE」rockin'on presents ROCK IN JAPAN FESTIVAL 2026 9/19
+LOCATION:千葉市蘇我スポーツ公園
+URL:https://www.eventernote.com/events/479208
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:rockin'on presents ROCK IN JAPAN FESTIVAL 2026 9/19
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:482110@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20260922
+DTEND;VALUE=DATE:20260922
+DESCRIPTION:出演者: 斉藤朱夏\nhttps://www.eventernote.com/events/482
+ 110\n開場 13:00 開演 14:00 終演 15:30
+SUMMARY:「斉藤朱夏」【第一部】三宅美羽先生はたぬきで
+ した。リアルイベント「みーたぬサミット2026秋」
+LOCATION:日経ホール
+URL:https://www.eventernote.com/events/482110
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:【第一部】三宅美羽先生はたぬきでした。リアルイベント「みーたぬサミット2026秋」
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:488950@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20260922
+DTEND;VALUE=DATE:20260922
+DESCRIPTION:出演者: 岬なこ\nhttps://www.eventernote.com/events/488950
+ \n開場 17:00 開演 18:00 終演 19:30
+SUMMARY:「岬なこ」みんなあつまれ！葉山風花の Happy Lucky!
+ 2026 第2部
+LOCATION:科学技術館サイエンスホール
+URL:https://www.eventernote.com/events/488950
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:みんなあつまれ！葉山風花の Happy Lucky!2026 第2部
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:488973@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20260926
+DTEND;VALUE=DATE:20260926
+DESCRIPTION:出演者: 岬なこ、Liella!\nhttps://www.eventernote.com/eve
+ nts/488973
+SUMMARY:「岬なこ、Liella!」JAPAN WEEKEND  MADRID Day1
+LOCATION:Riyadh Air Metropolitano
+URL:https://www.eventernote.com/events/488973
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:JAPAN WEEKEND  MADRID Day1
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:474843@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20260927
+DTEND;VALUE=DATE:20260927
+DESCRIPTION:出演者: 斉藤朱夏、結那\nhttps://www.eventernote.com/e
+ vents/474843\n開場 14:15 開演 15:00 終演 16:30
+SUMMARY:「斉藤朱夏、結那」25歳もぶっとバースデー！～
+ にこにこでLet'2 GO～ 15:00
+LOCATION:日本教育会館 一ツ橋ホール
+URL:https://www.eventernote.com/events/474843
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:25歳もぶっとバースデー！～にこにこでLet'2 GO～ 15:00
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:474844@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20260927
+DTEND;VALUE=DATE:20260927
+DESCRIPTION:出演者: 結那\nhttps://www.eventernote.com/events/474844\n
+ 開場 17:45 開演 18:30 終演 20:00
+SUMMARY:「結那」25歳もぶっとバースデー！～にこにこでLe
+ t'2 GO～ 18:30
+LOCATION:日本教育会館 一ツ橋ホール
+URL:https://www.eventernote.com/events/474844
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:25歳もぶっとバースデー！～にこにこでLet'2 GO～ 18:30
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:488974@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20260927
+DTEND;VALUE=DATE:20260927
+DESCRIPTION:出演者: 岬なこ、Liella!\nhttps://www.eventernote.com/eve
+ nts/488974
+SUMMARY:「岬なこ、Liella!」JAPAN WEEKEND  MADRID Day2
+LOCATION:Riyadh Air Metropolitano
+URL:https://www.eventernote.com/events/488974
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:JAPAN WEEKEND  MADRID Day2
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:466169@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261002
+DTEND;VALUE=DATE:20261002
+DESCRIPTION:出演者: Liella!\nhttps://www.eventernote.com/events/466169\n
+ 開場 - 開演 14:20 終演 15:00
+SUMMARY:「Liella!」『Liella!と結ぶプロジェクト』ミニアル
+ バム発売記念お渡し会 ゲーマーズ回 伊達さゆり(澁谷
+ かのん 役)
+LOCATION:!_東京都内某所
+URL:https://www.eventernote.com/events/466169
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:『Liella!と結ぶプロジェクト』ミニアルバム発売記念お渡し会 ゲーマーズ回 伊達さゆり(澁谷かのん 役)
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:466171@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261002
+DTEND;VALUE=DATE:20261002
+DESCRIPTION:出演者: Liella!\nhttps://www.eventernote.com/events/466171\n
+ 開場 - 開演 15:30 終演 16:10
+SUMMARY:「Liella!」『Liella!と結ぶプロジェクト』ミニアル
+ バム発売記念お渡し会 ゲーマーズ回 Liyuu(唐 可可 役)
+LOCATION:!_東京都内某所
+URL:https://www.eventernote.com/events/466171
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:『Liella!と結ぶプロジェクト』ミニアルバム発売記念お渡し会 ゲーマーズ回 Liyuu(唐 可可 役)
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:466172@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261002
+DTEND;VALUE=DATE:20261002
+DESCRIPTION:出演者: Liella!\nhttps://www.eventernote.com/events/466172\n
+ 開場 - 開演 16:40 終演 17:20
+SUMMARY:「Liella!」『Liella!と結ぶプロジェクト』ミニアル
+ バム発売記念お渡し会 ゲーマーズ回 青山なぎさ(葉月 
+ 恋 役)
+LOCATION:!_東京都内某所
+URL:https://www.eventernote.com/events/466172
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:『Liella!と結ぶプロジェクト』ミニアルバム発売記念お渡し会 ゲーマーズ回 青山なぎさ(葉月 恋 役)
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:466173@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261002
+DTEND;VALUE=DATE:20261002
+DESCRIPTION:出演者: Liella!\nhttps://www.eventernote.com/events/466173\n
+ 開場 - 開演 17:50 終演 18:30
+SUMMARY:「Liella!」『Liella!と結ぶプロジェクト』ミニアル
+ バム発売記念お渡し会 ゲーマーズ回 鈴原希実(桜小路
+ きな子 役)
+LOCATION:!_東京都内某所
+URL:https://www.eventernote.com/events/466173
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:『Liella!と結ぶプロジェクト』ミニアルバム発売記念お渡し会 ゲーマーズ回 鈴原希実(桜小路きな子 役)
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:466175@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261002
+DTEND;VALUE=DATE:20261002
+DESCRIPTION:出演者: Liella!、薮島朱音\nhttps://www.eventernote.com/
+ events/466175\n開場 - 開演 19:00 終演 19:40
+SUMMARY:「Liella!、薮島朱音」『Liella!と結ぶプロジェクト
+ 』ミニアルバム発売記念お渡し会 ゲーマーズ回 薮島朱
+ 音(米女メイ 役)
+LOCATION:!_東京都内某所
+URL:https://www.eventernote.com/events/466175
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:『Liella!と結ぶプロジェクト』ミニアルバム発売記念お渡し会 ゲーマーズ回 薮島朱音(米女メイ 役)
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:466176@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261002
+DTEND;VALUE=DATE:20261002
+DESCRIPTION:出演者: 結那、Liella!\nhttps://www.eventernote.com/events
+ /466176\n開場 - 開演 20:10 終演 20:50
+SUMMARY:「結那、Liella!」『Liella!と結ぶプロジェクト』ミ
+ ニアルバム発売記念お渡し会 ゲーマーズ回 結那(ウィ
+ ーン・マルガレーテ 役)
+LOCATION:!_東京都内某所
+URL:https://www.eventernote.com/events/466176
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:『Liella!と結ぶプロジェクト』ミニアルバム発売記念お渡し会 ゲーマーズ回 結那(ウィーン・マルガレーテ 役)
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:477664@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261003
+DTEND;VALUE=DATE:20261003
+DESCRIPTION:出演者: 岬なこ\nhttps://www.eventernote.com/events/477664
+ \n開場 13:30 開演 14:00 終演 15:30
+SUMMARY:「岬なこ」「岬なこのそんなこんなこラジオ！」
+ イベント 第1部 なこの部
+LOCATION:科学技術館サイエンスホール
+URL:https://www.eventernote.com/events/477664
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:「岬なこのそんなこんなこラジオ！」イベント 第1部 なこの部
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:477665@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261003
+DTEND;VALUE=DATE:20261003
+DESCRIPTION:出演者: 岬なこ\nhttps://www.eventernote.com/events/477665
+ \n開場 16:30 開演 17:00 終演 19:00
+SUMMARY:「岬なこ」「岬なこのそんなこんなこラジオ！」
+ イベント 第2部 ちゃーんの部
+LOCATION:科学技術館サイエンスホール
+URL:https://www.eventernote.com/events/477665
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:「岬なこのそんなこんなこラジオ！」イベント 第2部 ちゃーんの部
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:483710@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261003
+DTEND;VALUE=DATE:20261003
+DESCRIPTION:出演者: =LOVE\nhttps://www.eventernote.com/events/483710\n
+ 開場 10:30 開演 11:00 終演 16:30
+SUMMARY:「=LOVE」＝LOVE 21stシングル発売記念 個別お話し会1
+ 0/3
+LOCATION:東京ビッグサイト(東京国際展示場)
+URL:https://www.eventernote.com/events/483710
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:＝LOVE 21stシングル発売記念 個別お話し会10/3
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:477666@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261004
+DTEND;VALUE=DATE:20261004
+DESCRIPTION:出演者: 岬なこ\nhttps://www.eventernote.com/events/477666
+ \n開場 13:00 開演 13:30 終演 15:30
+SUMMARY:「岬なこ」「もえ・つむぎ・きゅーとあぐれっし
+ ょんっ！あやねもいるよ♪」イベント 第1部 うどんの
+ 部
+LOCATION:科学技術館サイエンスホール
+URL:https://www.eventernote.com/events/477666
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:「もえ・つむぎ・きゅーとあぐれっしょんっ！あやねもいるよ♪」イベント 第1部 うどんの部
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:487956@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261004
+DTEND;VALUE=DATE:20261004
+DESCRIPTION:出演者: 斉藤朱夏\nhttps://www.eventernote.com/events/487
+ 956\n開場 - 開演 14:30 終演 16:30
+SUMMARY:「斉藤朱夏」Saito Shuka HongKong Oneman Live ～IT'S SHUUU TI
+ ME～ 1部
+LOCATION:PORTAL
+URL:https://www.eventernote.com/events/487956
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Saito Shuka HongKong Oneman Live ～IT'S SHUUU TIME～ 1部
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:489207@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261004
+DTEND;VALUE=DATE:20261004
+DESCRIPTION:出演者: 薮島朱音\nhttps://www.eventernote.com/events/489
+ 207\n開場 11:30 開演 12:00 終演 14:00
+SUMMARY:「薮島朱音」薮島朱音がYATTEKURU【第1部】
+LOCATION:あるあるCity 7Fホール
+URL:https://www.eventernote.com/events/489207
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:薮島朱音がYATTEKURU【第1部】
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:489208@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261004
+DTEND;VALUE=DATE:20261004
+DESCRIPTION:出演者: 薮島朱音\nhttps://www.eventernote.com/events/489
+ 208\n開場 15:15 開演 15:45 終演 17:45
+SUMMARY:「薮島朱音」薮島朱音がYATTEKURU【第2部】
+LOCATION:あるあるCity 7Fホール
+URL:https://www.eventernote.com/events/489208
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:薮島朱音がYATTEKURU【第2部】
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:490334@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261004
+DTEND;VALUE=DATE:20261004
+DESCRIPTION:出演者: 斉藤朱夏\nhttps://www.eventernote.com/events/490
+ 334\n開場 - 開演 19:30 終演 21:30
+SUMMARY:「斉藤朱夏」Saito Shuka HongKong Oneman Live ～IT'S SHUUU TI
+ ME～ 2部
+LOCATION:PORTAL
+URL:https://www.eventernote.com/events/490334
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Saito Shuka HongKong Oneman Live ～IT'S SHUUU TIME～ 2部
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:466177@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261009
+DTEND;VALUE=DATE:20261009
+DESCRIPTION:出演者: Liella!\nhttps://www.eventernote.com/events/466177\n
+ 開場 - 開演 14:20 終演 15:00
+SUMMARY:「Liella!」『Liella!と結ぶプロジェクト』ミニアル
+ バム発売記念お渡し会 アニメイト回 ペイトン尚未(平
+ 安名すみれ 役)
+LOCATION:!_東京都内某所
+URL:https://www.eventernote.com/events/466177
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:『Liella!と結ぶプロジェクト』ミニアルバム発売記念お渡し会 アニメイト回 ペイトン尚未(平安名すみれ 役)
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:466178@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261009
+DTEND;VALUE=DATE:20261009
+DESCRIPTION:出演者: 岬なこ、Liella!\nhttps://www.eventernote.com/eve
+ nts/466178\n開場 - 開演 15:30 終演 16:10
+SUMMARY:「岬なこ、Liella!」『Liella!と結ぶプロジェクト』
+ ミニアルバム発売記念お渡し会 アニメイト回 岬 なこ(
+ 嵐 千砂都 役)
+LOCATION:!_東京都内某所
+URL:https://www.eventernote.com/events/466178
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:『Liella!と結ぶプロジェクト』ミニアルバム発売記念お渡し会 アニメイト回 岬 なこ(嵐 千砂都 役)
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:466179@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261009
+DTEND;VALUE=DATE:20261009
+DESCRIPTION:出演者: Liella!\nhttps://www.eventernote.com/events/466179\n
+ 開場 - 開演 16:40 終演 17:20
+SUMMARY:「Liella!」『Liella!と結ぶプロジェクト』ミニアル
+ バム発売記念お渡し会 アニメイト回 大熊和奏(若菜四
+ 季 役)
+LOCATION:!_東京都内某所
+URL:https://www.eventernote.com/events/466179
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:『Liella!と結ぶプロジェクト』ミニアルバム発売記念お渡し会 アニメイト回 大熊和奏(若菜四季 役)
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:466180@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261009
+DTEND;VALUE=DATE:20261009
+DESCRIPTION:出演者: Liella!\nhttps://www.eventernote.com/events/466180\n
+ 開場 - 開演 17:50 終演 18:30
+SUMMARY:「Liella!」『Liella!と結ぶプロジェクト』ミニアル
+ バム発売記念お渡し会 アニメイト回 絵森 彩(鬼塚夏美 
+ 役)
+LOCATION:!_東京都内某所
+URL:https://www.eventernote.com/events/466180
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:『Liella!と結ぶプロジェクト』ミニアルバム発売記念お渡し会 アニメイト回 絵森 彩(鬼塚夏美 役)
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:466181@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261009
+DTEND;VALUE=DATE:20261009
+DESCRIPTION:出演者: Liella!\nhttps://www.eventernote.com/events/466181\n
+ 開場 - 開演 19:00 終演 19:40
+SUMMARY:「Liella!」『Liella!と結ぶプロジェクト』ミニアル
+ バム発売記念お渡し会 アニメイト回 坂倉 花(鬼塚冬毬 
+ 役)
+LOCATION:!_東京都内某所
+URL:https://www.eventernote.com/events/466181
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:『Liella!と結ぶプロジェクト』ミニアルバム発売記念お渡し会 アニメイト回 坂倉 花(鬼塚冬毬 役)
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:488870@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261010
+DTEND;VALUE=DATE:20261010
+DESCRIPTION:出演者: =LOVE\nhttps://www.eventernote.com/events/488870\n
+ 開場 16:00 開演 17:00 終演 20:00
+SUMMARY:「=LOVE」STARフェス DAY1
+LOCATION:ぴあアリーナMM
+URL:https://www.eventernote.com/events/488870
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:STARフェス DAY1
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:481980@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261011
+DTEND;VALUE=DATE:20261011
+DESCRIPTION:出演者: 結那、Liella!\nhttps://www.eventernote.com/events
+ /481980\n開場 13:00 開演 14:00 終演 16:00
+SUMMARY:「結那、Liella!」LoveLive! Series 15th Anniversary ラブラ
+ イブ！フェス 前夜祭 FILM LIVE ～未来へ届けるタイムカ
+ プセル～ Day.2 ＜昼公演＞
+LOCATION:Shibuya LOVEZ(シブヤ ラブズ)
+URL:https://www.eventernote.com/events/481980
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:LoveLive! Series 15th Anniversary ラブライブ！フェス 前夜祭 FILM LIVE ～未来へ届けるタイムカプセル～ Day.2 ＜昼公演＞
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:486357@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261011
+DTEND;VALUE=DATE:20261011
+DESCRIPTION:出演者: 結那、Liella!\nhttps://www.eventernote.com/events
+ /486357\n開場 17:00 開演 18:00 終演 20:00
+SUMMARY:「結那、Liella!」LoveLive! Series 15th Anniversary ラブラ
+ イブ！フェス 前夜祭 FILM LIVE ～未来へ届けるタイムカ
+ プセル～ Day.2 ＜夜公演＞
+LOCATION:Shibuya LOVEZ(シブヤ ラブズ)
+URL:https://www.eventernote.com/events/486357
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:LoveLive! Series 15th Anniversary ラブライブ！フェス 前夜祭 FILM LIVE ～未来へ届けるタイムカプセル～ Day.2 ＜夜公演＞
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:482596@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261015
+DTEND;VALUE=DATE:20261015
+DESCRIPTION:出演者: =LOVE\nhttps://www.eventernote.com/events/482596\n
+ 開場 16:30 開演 18:00 終演 21:00
+SUMMARY:「=LOVE」＝LOVE 9th ANNIVERSARY PREMIUM CONCERT DAY1
+LOCATION:TOYOTA ARENA TOKYO(トヨタアリーナ東京)
+URL:https://www.eventernote.com/events/482596
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:＝LOVE 9th ANNIVERSARY PREMIUM CONCERT DAY1
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:482597@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261016
+DTEND;VALUE=DATE:20261016
+DESCRIPTION:出演者: =LOVE\nhttps://www.eventernote.com/events/482597\n
+ 開場 16:30 開演 18:00 終演 21:00
+SUMMARY:「=LOVE」＝LOVE 9th ANNIVERSARY PREMIUM CONCERT DAY2
+LOCATION:TOYOTA ARENA TOKYO(トヨタアリーナ東京)
+URL:https://www.eventernote.com/events/482597
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:＝LOVE 9th ANNIVERSARY PREMIUM CONCERT DAY2
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:489031@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261018
+DTEND;VALUE=DATE:20261018
+DESCRIPTION:出演者: 岬なこ\nhttps://www.eventernote.com/events/489031
+ \n開場 13:15 開演 14:00 終演 16:00
+SUMMARY:「岬なこ」Meet the Symphonic　昼公演
+LOCATION:RaiBoC Hall(市民会館おおみや) 大ホール
+URL:https://www.eventernote.com/events/489031
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Meet the Symphonic　昼公演
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:489032@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261018
+DTEND;VALUE=DATE:20261018
+DESCRIPTION:出演者: 岬なこ\nhttps://www.eventernote.com/events/489032
+ \n開場 17:15 開演 18:00 終演 20:00
+SUMMARY:「岬なこ」Meet the Symphonic　夜公演
+LOCATION:RaiBoC Hall(市民会館おおみや) 大ホール
+URL:https://www.eventernote.com/events/489032
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Meet the Symphonic　夜公演
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:488918@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261024
+DTEND;VALUE=DATE:20261024
+DESCRIPTION:出演者: 薮島朱音\nhttps://www.eventernote.com/events/488
+ 918\n開場 12:30 開演 13:00 終演 14:30
+SUMMARY:「薮島朱音」博品館劇場名作リーディングシアタ
+ ー「シャーロック・ホームズ～緋色の研究・出会い～
+ 」10/24 13:00
+LOCATION:銀座博品館劇場
+URL:https://www.eventernote.com/events/488918
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:博品館劇場名作リーディングシアター「シャーロック・ホームズ～緋色の研究・出会い～」10/24 13:00
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:488147@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261029
+DTEND;VALUE=DATE:20261029
+DESCRIPTION:出演者: =LOVE\nhttps://www.eventernote.com/events/488147\n
+ 開場 16:00 開演 18:00 終演 22:00
+SUMMARY:「=LOVE」MTV VMAJ 2026
+LOCATION:東京ドーム
+URL:https://www.eventernote.com/events/488147
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:MTV VMAJ 2026
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:464371@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261114
+DTEND;VALUE=DATE:20261114
+DESCRIPTION:出演者: Aqours、斉藤朱夏、結那、岬なこ、Liella!
+ 、薮島朱音\nhttps://www.eventernote.com/events/464371\n開場 14:30 
+ 開演 16:30 終演 20:30
+SUMMARY:「Aqours、斉藤朱夏、結那、岬なこ、Liella!、薮島朱
+ 音」LoveLive! Series 15th Anniversary ラブライブ！フェス Day.1
+LOCATION:バンテリンドーム ナゴヤ(ナゴヤドーム)
+URL:https://www.eventernote.com/events/464371
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:LoveLive! Series 15th Anniversary ラブライブ！フェス Day.1
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:464372@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261115
+DTEND;VALUE=DATE:20261115
+DESCRIPTION:出演者: Aqours、斉藤朱夏、結那、岬なこ、Liella!
+ 、薮島朱音\nhttps://www.eventernote.com/events/464372\n開場 13:30 
+ 開演 15:30 終演 19:30
+SUMMARY:「Aqours、斉藤朱夏、結那、岬なこ、Liella!、薮島朱
+ 音」LoveLive! Series 15th Anniversary ラブライブ！フェス Day.2
+LOCATION:バンテリンドーム ナゴヤ(ナゴヤドーム)
+URL:https://www.eventernote.com/events/464372
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:LoveLive! Series 15th Anniversary ラブライブ！フェス Day.2
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:487834@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261121
+DTEND;VALUE=DATE:20261121
+DESCRIPTION:出演者: 岬なこ\nhttps://www.eventernote.com/events/487834
+ \n開場 14:00 開演 15:00 終演 17:00
+SUMMARY:「岬なこ」岬なこ×楡井希実 合同ファンクラブイ
+ ベント「なこちゅけまつり〜2026 autumn〜」昼公演
+LOCATION:豊洲PIT
+URL:https://www.eventernote.com/events/487834
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:岬なこ×楡井希実 合同ファンクラブイベント「なこちゅけまつり〜2026 autumn〜」昼公演
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:487835@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261121
+DTEND;VALUE=DATE:20261121
+DESCRIPTION:出演者: 岬なこ\nhttps://www.eventernote.com/events/487835
+ \n開場 18:00 開演 19:00 終演 21:00
+SUMMARY:「岬なこ」岬なこ×楡井希実 合同ファンクラブイ
+ ベント「なこちゅけまつり〜2026 autumn〜」夜公演
+LOCATION:豊洲PIT
+URL:https://www.eventernote.com/events/487835
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:岬なこ×楡井希実 合同ファンクラブイベント「なこちゅけまつり〜2026 autumn〜」夜公演
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:490032@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261127
+DTEND;VALUE=DATE:20261127
+DESCRIPTION:出演者: =LOVE\nhttps://www.eventernote.com/events/490032\n
+ 開場 17:00 開演 18:00 終演 21:00
+SUMMARY:「=LOVE」GIFT ～Girls Idol Festival Tokyo～ DAY-1
+LOCATION:SGC HALL ARIAKE(SGCホール有明)
+URL:https://www.eventernote.com/events/490032
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:GIFT ～Girls Idol Festival Tokyo～ DAY-1
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:488148@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261128
+DTEND;VALUE=DATE:20261128
+DESCRIPTION:出演者: 岬なこ\nhttps://www.eventernote.com/events/488148
+SUMMARY:「岬なこ」北九州ポップカルチャーフェスティバ
+ ル2026 KPF2026スペシャルLIVE
+LOCATION:北九州メッセ(西日本総合展示場新館)
+URL:https://www.eventernote.com/events/488148
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:北九州ポップカルチャーフェスティバル2026 KPF2026スペシャルLIVE
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:489405@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261225
+DTEND;VALUE=DATE:20261225
+DESCRIPTION:出演者: 斉藤朱夏\nhttps://www.eventernote.com/events/489
+ 405\n開場 13:00 開演 14:00 終演 16:00
+SUMMARY:「斉藤朱夏」朱演 〜Christ・Masda〜 #クリパ編 昼公
+ 演
+LOCATION:ヒューリックホール東京(HULIC HALL TOKYO)
+URL:https://www.eventernote.com/events/489405
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:朱演 〜Christ・Masda〜 #クリパ編 昼公演
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:489406@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20261225
+DTEND;VALUE=DATE:20261225
+DESCRIPTION:出演者: 斉藤朱夏\nhttps://www.eventernote.com/events/489
+ 406\n開場 18:00 開演 19:00 終演 21:00
+SUMMARY:「斉藤朱夏」朱演 〜Christ・Masda〜  夜公演
+LOCATION:ヒューリックホール東京(HULIC HALL TOKYO)
+URL:https://www.eventernote.com/events/489406
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:朱演 〜Christ・Masda〜  夜公演
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:482720@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20270119
+DTEND;VALUE=DATE:20270119
+DESCRIPTION:出演者: =LOVE\nhttps://www.eventernote.com/events/482720
+SUMMARY:「=LOVE」＝LOVE in TOKYO DOME day1
+LOCATION:東京ドーム
+URL:https://www.eventernote.com/events/482720
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:＝LOVE in TOKYO DOME day1
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:482721@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20270120
+DTEND;VALUE=DATE:20270120
+DESCRIPTION:出演者: =LOVE\nhttps://www.eventernote.com/events/482721
+SUMMARY:「=LOVE」＝LOVE in TOKYO DOME day2
+LOCATION:東京ドーム
+URL:https://www.eventernote.com/events/482721
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:＝LOVE in TOKYO DOME day2
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:482665@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20270213
+DTEND;VALUE=DATE:20270213
+DESCRIPTION:出演者: 岬なこ\nhttps://www.eventernote.com/events/482665
+ \n開場 14:00 開演 14:40 終演 20:00
+SUMMARY:「岬なこ」音泉祭り2027東京
+LOCATION:TACHIKAWA STAGE GARDEN
+URL:https://www.eventernote.com/events/482665
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:音泉祭り2027東京
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:486496@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20270320
+DTEND;VALUE=DATE:20270320
+DESCRIPTION:出演者: Aqours\nhttps://www.eventernote.com/events/486496\n
+ 開場 13:00 開演 14:00 終演 16:00
+SUMMARY:「Aqours」ラブライブ！サンシャイン!! 第５回沼津
+ 地元愛まつり ＜Day.1＞＜昼公演＞
+LOCATION:キラメッセぬまづ(プラサヴェルデ内)
+URL:https://www.eventernote.com/events/486496
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ラブライブ！サンシャイン!! 第５回沼津地元愛まつり ＜Day.1＞＜昼公演＞
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:486497@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20270320
+DTEND;VALUE=DATE:20270320
+DESCRIPTION:出演者: Aqours\nhttps://www.eventernote.com/events/486497\n
+ 開場 17:30 開演 18:30 終演 20:30
+SUMMARY:「Aqours」ラブライブ！サンシャイン!! 第５回沼津
+ 地元愛まつり ＜Day.1＞＜夜公演＞
+LOCATION:キラメッセぬまづ(プラサヴェルデ内)
+URL:https://www.eventernote.com/events/486497
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ラブライブ！サンシャイン!! 第５回沼津地元愛まつり ＜Day.1＞＜夜公演＞
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:486498@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20270321
+DTEND;VALUE=DATE:20270321
+DESCRIPTION:出演者: Aqours\nhttps://www.eventernote.com/events/486498\n
+ 開場 13:00 開演 14:00 終演 16:00
+SUMMARY:「Aqours」ラブライブ！サンシャイン!! 第５回沼津
+ 地元愛まつり ＜Day.2＞＜昼公演＞
+LOCATION:キラメッセぬまづ(プラサヴェルデ内)
+URL:https://www.eventernote.com/events/486498
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ラブライブ！サンシャイン!! 第５回沼津地元愛まつり ＜Day.2＞＜昼公演＞
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:486499@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20270321
+DTEND;VALUE=DATE:20270321
+DESCRIPTION:出演者: Aqours\nhttps://www.eventernote.com/events/486499\n
+ 開場 17:30 開演 18:30 終演 20:30
+SUMMARY:「Aqours」ラブライブ！サンシャイン!! 第５回沼津
+ 地元愛まつり ＜Day.2＞＜夜公演＞
+LOCATION:キラメッセぬまづ(プラサヴェルデ内)
+URL:https://www.eventernote.com/events/486499
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ラブライブ！サンシャイン!! 第５回沼津地元愛まつり ＜Day.2＞＜夜公演＞
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:486500@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20270322
+DTEND;VALUE=DATE:20270322
+DESCRIPTION:出演者: Aqours、斉藤朱夏\nhttps://www.eventernote.com/e
+ vents/486500\n開場 13:00 開演 14:00 終演 16:00
+SUMMARY:「Aqours、斉藤朱夏」ラブライブ！サンシャイン!! 
+ 第５回沼津地元愛まつり ＜Day.3＞＜昼公演＞
+LOCATION:キラメッセぬまづ(プラサヴェルデ内)
+URL:https://www.eventernote.com/events/486500
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ラブライブ！サンシャイン!! 第５回沼津地元愛まつり ＜Day.3＞＜昼公演＞
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:486501@eventernote-watcher
+DTSTAMP:20260827T034137Z
+DTSTART;VALUE=DATE:20270322
+DTEND;VALUE=DATE:20270322
+DESCRIPTION:出演者: Aqours、斉藤朱夏\nhttps://www.eventernote.com/e
+ vents/486501\n開場 17:30 開演 18:30 終演 20:30
+SUMMARY:「Aqours、斉藤朱夏」ラブライブ！サンシャイン!! 
+ 第５回沼津地元愛まつり ＜Day.3＞＜夜公演＞
+LOCATION:キラメッセぬまづ(プラサヴェルデ内)
+URL:https://www.eventernote.com/events/486501
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ラブライブ！サンシャイン!! 第５回沼津地元愛まつり ＜Day.3＞＜夜公演＞
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+END:VCALENDAR

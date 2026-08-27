@@ -246,9 +246,17 @@ class Watcher:
             ev = entry["ev"]
             cell = zebra[i % 2]
             actors = html_mod.escape("、".join(entry["actors"]))
-            when = html_mod.escape(ev.date or "日期未定")
+            when_parts = [html_mod.escape(ev.date or "日期未定")]
             if ev.open_time:
-                when += "<br>" + html_mod.escape(ev.open_time)
+                # "開場 13:00 開演 14:00 終演 16:00" -> 每个时段独占一行;
+                # 不含这些关键字的时间信息保持原样单行
+                import re as re_mod
+
+                formatted = re_mod.sub(
+                    r"\s+(?=開場|開演|終演|終了)", "\n", ev.open_time
+                ).strip()
+                when_parts += html_mod.escape(formatted).split("\n")
+            when = "<br>".join(when_parts)
             parts.append(
                 f"<tr><td style='{cell}'>{actors}</td>"
                 f"<td style='{cell}white-space:nowrap'>{when}</td>"
