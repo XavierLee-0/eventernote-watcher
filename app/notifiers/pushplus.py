@@ -15,7 +15,7 @@ class PushPlusNotifier(Notifier):
             return "缺少 token"
         return None
 
-    async def send(self, title: str, content: str) -> None:
+    async def send(self, title: str, content: str, html: str | None = None) -> None:
         async with httpx.AsyncClient(timeout=15) as client:
             resp = await client.post(
                 "https://www.pushplus.plus/send",

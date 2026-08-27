@@ -16,7 +16,8 @@ class Notifier:
         """配置不完整时返回错误说明，否则 None。"""
         return None
 
-    async def send(self, title: str, content: str) -> None:
+    async def send(self, title: str, content: str, html: str | None = None) -> None:
+        """发送通知。content 为 Markdown 文本; html 为可选的 HTML 版本(邮件用)。"""
         raise NotImplementedError
 
 

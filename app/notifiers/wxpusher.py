@@ -17,7 +17,7 @@ class WxPusherNotifier(Notifier):
             return "缺少 uid（关注公众号后在用户页获取）"
         return None
 
-    async def send(self, title: str, content: str) -> None:
+    async def send(self, title: str, content: str, html: str | None = None) -> None:
         async with httpx.AsyncClient(timeout=15) as client:
             resp = await client.post(
                 "https://wxpusher.zjiecode.com/api/send/message",

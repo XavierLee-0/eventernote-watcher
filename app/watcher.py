@@ -179,14 +179,17 @@ class Watcher:
         if test:
             title = "[测试] " + title
         lines = []
+        rows = []  # (actor_name, ev) 扁平化, 供邮件表格排序用
         for actor, fresh in new_items:
             lines.append(f"## {actor['name']}")
             for ev in fresh:
                 when = ev.date or "日期未定"
                 place = f" @ {ev.place}" if ev.place else ""
                 lines.append(f"- [{ev.name}]({ev.url()})  \n  {when}{place}")
+                rows.append((actor["name"], ev))
             lines.append("")
         content = "\n".join(lines)
+        html = self._events_table_html(rows)
 
         notifiers = build_all(self.db.get_settings().get("notifiers", {}))
         if not notifiers:
@@ -196,13 +199,52 @@ class Watcher:
         ok_any = False
         for n in notifiers:
             try:
-                await n.send(title, content)
+                await n.send(title, content, html=html)
                 self.db.log_notification(None, None, n.name, title, True)
                 ok_any = True
             except Exception as e:
                 log.error("notify via %s failed: %s", n.name, e)
                 self.db.log_notification(None, None, n.name, title, False, str(e))
         return ok_any
+
+    @staticmethod
+    def _events_table_html(rows: list[tuple[str, "Event"]]) -> str:
+        """邮件用 HTML 表格: 出演时间从近到远, 列为 出演者/出演时间/活动名称/地点。
+        同一活动多位监视中的出演者共同出演时合并为一行, 出演者栏列出全部。"""
+        import html as html_mod
+
+        by_event: dict[int, dict] = {}
+        for actor_name, ev in rows:
+            entry = by_event.setdefault(ev.event_id, {"actors": [], "ev": ev})
+            if actor_name not in entry["actors"]:
+                entry["actors"].append(actor_name)
+        entries = sorted(by_event.values(), key=lambda e: e["ev"].date or "9999-12-31")
+
+        th = "border:1px solid #d0d7e2;padding:6px 10px;background:#f0f3f8;text-align:left;"
+        td = "border:1px solid #d0d7e2;padding:6px 10px;"
+        # 斑马纹: 奇数行浅蓝、偶数行白色, 便于逐行阅读
+        zebra = (td + "background:#f7fafc;", td + "background:#ffffff;")
+        parts = [
+            '<table style="border-collapse:collapse;font-size:14px;">',
+            f"<tr><th style='{th}'>出演者</th><th style='{th}'>出演时间</th>"
+            f"<th style='{th}'>活动名称</th><th style='{th}'>地点</th></tr>",
+        ]
+        for i, entry in enumerate(entries):
+            ev = entry["ev"]
+            cell = zebra[i % 2]
+            actors = html_mod.escape("、".join(entry["actors"]))
+            when = html_mod.escape(ev.date or "日期未定")
+            if ev.open_time:
+                when += "<br>" + html_mod.escape(ev.open_time)
+            parts.append(
+                f"<tr><td style='{cell}'>{actors}</td>"
+                f"<td style='{cell}white-space:nowrap'>{when}</td>"
+                f"<td style='{cell}'><a href='{html_mod.escape(ev.url())}'>"
+                f"{html_mod.escape(ev.name)}</a></td>"
+                f"<td style='{cell}'>{html_mod.escape(ev.place or '')}</td></tr>"
+            )
+        parts.append("</table>")
+        return "".join(parts)
 
     @property
     def running(self) -> bool:

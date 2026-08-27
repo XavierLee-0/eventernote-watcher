@@ -31,10 +31,14 @@ class EmailNotifier(Notifier):
                 return f"缺少 {field}"
         return None
 
-    async def send(self, title: str, content: str) -> None:
+    async def send(self, title: str, content: str, html: str | None = None) -> None:
         cfg = self.config
         recipients = _recipients(cfg["to_addr"])
-        msg = MIMEText(_plain_text(content), "plain", "utf-8")
+        if html:
+            msg = MIMEText(html, "html", "utf-8")
+        else:
+            # 无 HTML 版本时退回纯文本, 并把 Markdown 链接转成 文字 (url)
+            msg = MIMEText(_plain_text(content), "plain", "utf-8")
         msg["Subject"] = Header(title, "utf-8")
         msg["From"] = formataddr(("Eventernote Watcher", cfg["from_addr"]))
         msg["To"] = ", ".join(recipients)
