@@ -118,6 +118,10 @@ def create_router(db: Database, watcher: Watcher) -> APIRouter:
     def list_notifications(limit: int = 100):
         return db.list_notifications(limit)
 
+    @router.get("/fetch-logs")
+    def list_fetch_logs(limit: int = 200):
+        return db.list_fetch_logs(limit)
+
     # ---------- 配置导出/导入 ----------
     @router.get("/export")
     def export_config():

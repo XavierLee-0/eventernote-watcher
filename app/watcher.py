@@ -130,12 +130,15 @@ class Watcher:
                     except Exception as e:
                         summary["failed"] += 1
                         self.db.record_fetch(actor["actor_id"], False, str(e))
+                        self.db.log_fetch(actor["actor_id"], actor["name"], False, error=str(e))
                         log.warning("fetch %s failed: %s", actor["name"], e)
                         continue
                     self.db.record_fetch(actor["actor_id"], True, None)
                     seen = self.db.get_seen_ids(actor["actor_id"])
                     fresh = [ev for ev in events if ev.event_id not in seen]
                     self.db.mark_seen(actor["actor_id"], events)
+                    self.db.log_fetch(actor["actor_id"], actor["name"], True,
+                                      events_count=len(events), new_count=len(fresh))
                     if actor["baselined"] and fresh:
                         new_items.append((actor, fresh))
                     elif not actor["baselined"]:

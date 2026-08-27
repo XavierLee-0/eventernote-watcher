@@ -57,6 +57,16 @@ CREATE TABLE IF NOT EXISTS notifications (
     error TEXT,
     created_at TEXT DEFAULT (datetime('now', 'localtime'))
 );
+CREATE TABLE IF NOT EXISTS fetch_logs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    actor_id INTEGER,
+    actor_name TEXT,
+    ok INTEGER NOT NULL,
+    events_count INTEGER,
+    new_count INTEGER,
+    error TEXT,
+    created_at TEXT DEFAULT (datetime('now', 'localtime'))
+);
 CREATE TABLE IF NOT EXISTS settings (
     key TEXT PRIMARY KEY,
     value TEXT NOT NULL
@@ -251,5 +261,23 @@ class Database:
         with self._conn() as c:
             rows = c.execute(
                 "SELECT * FROM notifications ORDER BY id DESC LIMIT ?", (limit,)
+            ).fetchall()
+            return [dict(r) for r in rows]
+
+    # ---------- 抓取日志 ----------
+    def log_fetch(self, actor_id: int, actor_name: str, ok: bool,
+                  events_count: int = 0, new_count: int = 0,
+                  error: str | None = None) -> None:
+        with self._lock, self._conn() as c:
+            c.execute(
+                "INSERT INTO fetch_logs(actor_id, actor_name, ok, events_count, new_count, error) "
+                "VALUES (?,?,?,?,?,?)",
+                (actor_id, actor_name, int(ok), events_count, new_count, error),
+            )
+
+    def list_fetch_logs(self, limit: int = 100) -> list[dict]:
+        with self._conn() as c:
+            rows = c.execute(
+                "SELECT * FROM fetch_logs ORDER BY id DESC LIMIT ?", (limit,)
             ).fetchall()
             return [dict(r) for r in rows]

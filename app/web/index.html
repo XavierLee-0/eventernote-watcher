@@ -242,7 +242,12 @@
 
   <!-- 日志 -->
   <template v-if="tab==='logs'">
-    <div class="card">
+    <nav style="margin-bottom:12px">
+      <button :class="{active: logTab==='notify'}" @click="logTab='notify'; loadLogs()">通知推送</button>
+      <button :class="{active: logTab==='fetch'}" @click="logTab='fetch'; loadLogs()">抓取记录</button>
+    </nav>
+
+    <div class="card" v-if="logTab==='notify'">
       <table>
         <thead><tr><th>时间</th><th>渠道</th><th>标题</th><th>结果</th></tr></thead>
         <tbody>
@@ -253,6 +258,22 @@
             <td>{{ n.title }}</td>
             <td><span class="tag" :class="n.ok ? 'ok' : 'err'">{{ n.ok ? '成功' : '失败' }}</span>
                 <div v-if="n.error" class="muted">{{ n.error }}</div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" v-if="logTab==='fetch'">
+      <table>
+        <thead><tr><th>时间</th><th>出演者</th><th>结果</th><th>抓到/新增</th><th>错误</th></tr></thead>
+        <tbody>
+          <tr v-if="!fetchLogs.length"><td colspan="5" class="muted">暂无抓取记录</td></tr>
+          <tr v-for="f in fetchLogs" :key="f.id">
+            <td style="white-space:nowrap">{{ f.created_at }}</td>
+            <td>{{ f.actor_name }}</td>
+            <td><span class="tag" :class="f.ok ? 'ok' : 'err'">{{ f.ok ? '成功' : '失败' }}</span></td>
+            <td>{{ f.ok ? f.events_count + ' / ' + f.new_count : '-' }}</td>
+            <td class="muted" style="max-width:260px;word-break:break-all">{{ f.error || '' }}</td>
           </tr>
         </tbody>
       </table>
@@ -275,6 +296,11 @@ createApp({
     const actors = ref([]);
     const events = ref([]);
     const notifications = ref([]);
+    const fetchLogs = ref([]);
+    const logTab = ref('notify');
+    const loadLogs = () => logTab.value === 'fetch'
+      ? api('/fetch-logs').then(d => fetchLogs.value = d)
+      : api('/notifications').then(d => notifications.value = d);
     const eventsActor = ref(null);
     const futureOnly = ref(true);
 
@@ -362,7 +388,7 @@ createApp({
       } catch (e) { showToast(e.message); }
       finally {
         status.running = false;
-        await Promise.all([refreshStatus(), refreshActors(), refreshEvents(), refreshNotifications()]);
+        await Promise.all([refreshStatus(), refreshActors(), refreshEvents(), loadLogs()]);
       }
     };
 
@@ -445,7 +471,7 @@ createApp({
     watch([eventsActor, futureOnly], refreshEvents);
     watch(tab, (t) => {
       if (t === 'events') refreshEvents();
-      if (t === 'logs') refreshNotifications();
+      if (t === 'logs') loadLogs();
     });
 
     onMounted(async () => {
@@ -454,7 +480,7 @@ createApp({
     });
 
     return {
-      tab, toast, status, actors, events, notifications, eventsActor, futureOnly,
+      tab, toast, status, actors, events, notifications, fetchLogs, logTab, eventsActor, futureOnly,
       settings, savingSettings, testing, searchKw, searching, searchResults,
       doSearch, addActor, toggleActor, delActor, runNow, saveSettings, testNotify, simulateNotify, channelLabel,
       calUrl, copyCal, exportConfig, importConfig, importing, manualId, manualName, addManual,
