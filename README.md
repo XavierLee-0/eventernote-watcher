@@ -21,6 +21,7 @@
 - [方式一：WebUI 常驻模式](#方式一webui-常驻模式)
   - [Docker 部署（推荐）](#docker-部署推荐)
   - [首次配置（三步）](#首次配置三步)
+  - [浏览已抓取活动](#浏览已抓取活动)
   - [不用 Docker 的本地运行](#不用-docker-的本地运行)
 - [方式二：GitHub Actions 模式](#方式二github-actions-模式)
 - [日历订阅（Google Calendar 等）](#日历订阅google-calendar-等)
@@ -41,7 +42,7 @@ cd eventernote-watcher
 docker compose up -d --build
 ```
 
-浏览器打开 `http://<设备IP>:8000`，看到出演者页面即部署成功。
+浏览器打开 `http://<设备IP>:8000`，看到活动日历页面即部署成功。
 
 数据（出演者、活动快照、设置）都存在 `./data/eventernote.db`，随容器升级保留；备份这个文件即可备份全部数据。镜像默认时区为北京时间（`Asia/Shanghai`），需要其他时区时在部署环境设置 `TZ` 环境变量（IANA 时区名，如 `Asia/Tokyo`）。
 
@@ -62,6 +63,17 @@ docker compose up -d --build
 | WxPusher | app_token + uid | [wxpusher.zjiecode.com](https://wxpusher.zjiecode.com/) 注册应用得 app_token；微信扫码关注其公众号后，在「用户」页看到 uid |
 | PushPlus | token | [pushplus.plus](https://www.pushplus.plus/) 微信登录后在「一对一推送」页 |
 | 邮件 | SMTP 参数 | 以 QQ 邮箱为例：设置 → 账户 → 开启 SMTP → 生成授权码；host `smtp.qq.com`，port `465`，username 是邮箱地址，password 填授权码（不是QQ密码） |
+
+### 浏览已抓取活动
+
+「活动日历」页提供月历、周历和列表，均读取本地已抓取的活动；切换日期、视图或出演者筛选不会触发新抓取。「刷新活动」重新读取缓存，需要更新源站数据时使用「立即抓取」。
+
+- **月历**：固定六行等高日期格，可切换显示艺人或活动。每格最多两个单行标签，`+数字` 表示省略的项目；点击日期可在下方查看全部活动。
+- **周历**：周一至周日完整列出该周活动，支持上一周、下一周、选择日期和跳转最近活动。每张活动卡片最高 200px，标题最多三行，可悬停查看全文并点击打开原页面；窄屏按天排列。
+- **艺人与筛选**：不同艺人使用不同颜色，同一活动涉及多位已关注艺人时合并显示。支持按出演者和「只看未来」筛选；日期未定的活动可在月历下方单独查看。
+- **日历订阅**：页面底部展开「外部日历订阅」，可复制 iCal 链接或打开 `.ics` 文件。
+
+日历日期、去重、排序与筛选的测试可用 Node.js 运行：`node --test tests/calendar-view.test.cjs`。
 
 ### 不用 Docker 的本地运行
 
