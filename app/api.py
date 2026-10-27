@@ -5,10 +5,11 @@ import os
 
 import httpx
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from .db import Database
-from .fetcher import search_actors
+from .fetcher import search_actors, FetchError, UA
+from .favorites import fetch_user_favorites, normalize_username, ProfileNotFound
 from .notifiers import build_all
 from .watcher import Watcher
 from .calendar import generate_ics
@@ -34,6 +35,10 @@ class ActorPatch(BaseModel):
     name: str | None = None
 
 
+class FavoritesImportIn(BaseModel):
+    user: str = Field(min_length=1, max_length=2048)
+
+
 def create_router(db: Database, watcher: Watcher) -> APIRouter:
     router = APIRouter(prefix="/api")
 
@@ -46,6 +51,25 @@ def create_router(db: Database, watcher: Watcher) -> APIRouter:
         if not db.add_actor(body.actor_id, body.name):
             raise HTTPException(409, "该出演者已在列表中")
         return {"ok": True}
+
+    @router.post("/actors/import-favorites")
+    async def import_favorites(body: FavoritesImportIn):
+        try:
+            username = normalize_username(body.user)
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+        try:
+            async with httpx.AsyncClient(headers={"User-Agent": UA}, timeout=30) as client:
+                favorites = await fetch_user_favorites(client, username)
+        except ProfileNotFound as exc:
+            raise HTTPException(404, str(exc)) from exc
+        except FetchError as exc:
+            raise HTTPException(502, str(exc)) from exc
+        except httpx.HTTPError as exc:
+            raise HTTPException(502, "连接 Eventernote 失败，请稍后重试") from exc
+        added = db.add_favorite_actors(favorites)
+        return {"ok": True, "username": username, "total": len(favorites),
+                "added": added, "skipped": len(favorites) - added}
 
     @router.patch("/actors/{actor_id}")
     def patch_actor(actor_id: int, body: ActorPatch):

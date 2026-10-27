@@ -141,6 +141,18 @@ class Database:
             )
             return cur.rowcount > 0
 
+    def add_favorite_actors(self, actors: list) -> int:
+        """在同一个事务内追加收藏艺人，保留已有艺人的全部设置和抓取状态。"""
+        added = 0
+        with self._lock, self._conn() as c:
+            for actor in actors:
+                cur = c.execute(
+                    "INSERT OR IGNORE INTO actors(actor_id, name) VALUES (?, ?)",
+                    (actor.actor_id, actor.name),
+                )
+                added += cur.rowcount
+        return added
+
     def update_actor(self, actor_id: int, *, enabled: bool | None = None,
                      baselined: bool | None = None, name: str | None = None) -> None:
         sets, args = [], []

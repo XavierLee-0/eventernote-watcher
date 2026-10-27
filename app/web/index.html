@@ -72,6 +72,21 @@
   <!-- 出演者 -->
   <template v-if="tab==='actors'">
     <div class="card">
+      <b style="font-size:14px">从用户关注导入艺人</b>
+      <p class="muted" style="margin:8px 0">输入 Eventernote 用户名或个人主页链接，一次导入其公开收藏的声优／艺人。重复艺人自动跳过，保留已有设置。</p>
+      <div class="row">
+        <input class="grow" v-model="favoritesUser" aria-label="Eventernote 用户名或个人主页链接" placeholder="用户名或 https://www.eventernote.com/users/用户名" :disabled="importingFavorites" @keyup.enter="importFavorites">
+        <button class="btn" @click="importFavorites" :disabled="importingFavorites || !favoritesUser.trim()">{{ importingFavorites ? '正在读取关注…' : '导入关注艺人' }}</button>
+      </div>
+      <p v-if="favoritesError" role="alert" style="margin:10px 0 0;color:#c53030">{{ favoritesError }}</p>
+      <p v-if="favoritesResult" role="status" style="margin:10px 0 0;font-size:14px">
+        <template v-if="favoritesResult.total">已读取 {{ favoritesResult.username }} 的 {{ favoritesResult.total }} 位关注艺人：新增 {{ favoritesResult.added }} 位，已存在 {{ favoritesResult.skipped }} 位。</template>
+        <template v-else>{{ favoritesResult.username }} 暂无公开收藏的声优／艺人。</template>
+        <span v-if="favoritesResult.added">点击右上角「立即抓取」获取活动。</span>
+      </p>
+    </div>
+
+    <div class="card">
       <div class="row">
         <input class="grow" v-model="searchKw" placeholder="出演者名（需用日文汉字写法，如 斉藤朱夏）" @keyup.enter="doSearch">
         <button class="btn" @click="doSearch" :disabled="searching">{{ searching ? '搜索中…' : '搜索' }}</button>
@@ -106,7 +121,7 @@
       <table>
         <thead><tr><th>出演者</th><th>状态</th><th>上次抓取</th><th></th></tr></thead>
         <tbody>
-          <tr v-if="!actors.length"><td colspan="4" class="muted">还没有添加出演者，先在上方搜索添加</td></tr>
+          <tr v-if="!actors.length"><td colspan="4" class="muted">还没有添加出演者，可从用户关注导入，或搜索添加</td></tr>
           <tr v-for="a in actors" :key="a.actor_id">
             <td><b>{{ a.name }}</b><div class="muted">#{{ a.actor_id }}</div></td>
             <td>
@@ -314,6 +329,25 @@ createApp({
     const searchResults = ref([]);
     const manualId = ref(null);
     const manualName = ref('');
+    const favoritesUser = ref('');
+    const importingFavorites = ref(false);
+    const favoritesResult = ref(null);
+    const favoritesError = ref('');
+
+    const importFavorites = async () => {
+      if (importingFavorites.value || !favoritesUser.value.trim()) return;
+      importingFavorites.value = true;
+      favoritesResult.value = null;
+      favoritesError.value = '';
+      try {
+        favoritesResult.value = await api('/actors/import-favorites', {
+          method: 'POST', body: { user: favoritesUser.value.trim() },
+        });
+        await Promise.all([refreshActors(), refreshStatus()]);
+        searchResults.value.forEach(r => { r.watched = actors.value.some(a => a.actor_id === r.actor_id); });
+      } catch (e) { favoritesError.value = '导入失败：' + e.message; }
+      finally { importingFavorites.value = false; }
+    };
 
     const addManual = async () => {
       if (!manualId.value || !manualName.value.trim()) return;
@@ -484,6 +518,7 @@ createApp({
       settings, savingSettings, testing, searchKw, searching, searchResults,
       doSearch, addActor, toggleActor, delActor, runNow, saveSettings, testNotify, simulateNotify, channelLabel,
       calUrl, copyCal, exportConfig, importConfig, importing, manualId, manualName, addManual,
+      favoritesUser, importingFavorites, favoritesResult, favoritesError, importFavorites,
     };
   },
 }).mount('#app');
